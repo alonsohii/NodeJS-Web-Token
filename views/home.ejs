@@ -1,0 +1,71 @@
+<html>
+<head>
+  <title> <%= title %></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+  <script type="text/javascript" src="http://alasql.org/codex/lib/alasql/alasql.min.js"></script>
+  <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+
+   <script type="text/javascript" src=" ../js/adicional.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> 
+
+
+  <link rel="stylesheet" href="../css/adicional.css">
+
+  <script>
+
+$(document).ready(function() {
+         $("#Notificacion").hide();
+          $("#Correcto").hide();
+
+         $('#Notificacion').html(localStorage.getItem('tk'));
+            $("#Notificacion").show();
+
+     $("#login").click(function(){
+
+        $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
+          .done(function(data) {
+           // alert( "second success" );
+           localStorage.setItem('tk', data.token);
+           window.location="/home";
+          // debugger;
+          })
+          .fail(function() {
+           // alert( "error" );
+          })
+
+
+      });
+
+});
+</script>
+
+</head>
+<body>
+<%- include('header'); %>
+<div class="container containerBorder">
+  <div class="row">
+<div class="col-xs-12" id="demoContainer">
+  <div class="alert alert-success" id="Correcto">
+    <strong>Bien!</strong> Registro Hecho exitosamente.
+  </div>
+<div class="alert alert-danger" id="Notificacion" >
+ <p id="textnot" ></p>
+</div>
+
+        </div>
+    </div>
+</div>
+    </div>
+  </div>
+
+
+
+
+  </div>
+</body>
+</html>
