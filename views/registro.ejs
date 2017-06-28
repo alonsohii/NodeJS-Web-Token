@@ -8,6 +8,8 @@
   <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 
    <script type="text/javascript" src=" ../js/adicional.js"></script>
+   <script src="../lang/es.js"></script>
+      <script src="../js/lang.js"></script>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -33,17 +35,17 @@ $(document).ready(function() {
 
 debugger;
 var esvalido  = false;
-var campos = ["Nombre", "facebook", "Email","Password"];
-var valores = [nombre, facebook, email,pw];
+var campos = ["Nombre", "Email","Password"];
+var valores = [nombre, email,pw];
   esvalido = validarCampos(valores,campos);
 
 if(esvalido){
   if(pw==pw2){
 
        $("#Notificacion").hide(350);
-                                 $.post( "http://localhost:8080/usuario", CamposJson('#firstName,#facebook,#pw,#email,#ComboPaises'))
+                                 $.post( "http://localhost:8080/usuario", CamposJson('#firstName,#pw,#email,#ComboPaises'))
                                   .done(function( data ) {
-
+debugger;
 
                                     if(data.usuario==1 && !data.success){
                                          Error('Este usuario ya se encuentra registrado.');
@@ -88,7 +90,7 @@ if(esvalido){
                 <div id="registrationForm2" class="form-horizontal fv-form fv-form-bootstrap" novalidate="novalidate"  target="none" action="">
                  <!--  <button type="submit" class="fv-hidden-submit" style="display: none; width: 0px; height: 0px;"></button> -->
     <div class="form-group">
-        <label class="col-xs-3 control-label">Username</label>
+        <label class="col-xs-3 control-label" tkey="username" >s</label>
         <div class="col-xs-4">
             <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Nombre de usuario ej:pamfilo" />
         </div>
@@ -102,29 +104,29 @@ if(esvalido){
         </div>
     </div> -->
 
-        <div class="form-group">
+   <!--     <div class="form-group">
         <label class="col-xs-3 control-label">Facebook</label>
         <div class="col-xs-5">
             <input type="text" class="form-control" name="facebook" id="facebook" placeholder="www.facebook.com/usuariofb" />
         </div>
-    </div>
+    </div> -->
 
     <div class="form-group">
-        <label class="col-xs-3 control-label">Email address</label>
+        <label class="col-xs-3 control-label"   tkey="email" >Email address</label>
         <div class="col-xs-5">
             <input type="text" class="form-control" name="email" id="email"    placeholder="micorreo@correo.com"  />
         </div>
     </div>
 
     <div class="form-group">
-        <label class="col-xs-3 control-label">Password</label>
+        <label class="col-xs-3 control-label"  tkey="password" >Password</label>
         <div class="col-xs-5">
             <input type="password" class="form-control" name="pw" id="pw" />
         </div>
     </div>
 
      <div class="form-group">
-        <label class="col-xs-3 control-label">Repeat Password</label>
+        <label class="col-xs-3 control-label"  tkey="password2" >Repeat Password</label>
         <div class="col-xs-5">
             <input type="password" class="form-control" name="pw2"  id="pw2" />
         </div>
@@ -200,14 +202,14 @@ var idpais;
     }
     </script>
 
-        <div class="form-group">
+          <!--  <div class="form-group">
         <label class="col-xs-3 control-label">Selecciona Pais:</label>
         <div class="col-xs-5 selectContainer">
             <select class="form-control" name="color" id="ComboPaises">
                
             </select>
         </div>
-    </div>
+    </div> -->
 
 
     <div class="form-group">
