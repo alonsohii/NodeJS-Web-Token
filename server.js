@@ -46,6 +46,10 @@ Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
 Helper.Pagina('/demo','registro',{ title: "Diferente"},app);
 Helper.Pagina('/home','home',{ title: "Inicio"},app);
 
+app.get('/webdemo', function(req, res, next) {
+   res.render('home', {query : req.query , title:'asdas'});
+});
+
 Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
 
 
@@ -57,6 +61,7 @@ Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
 app.get('/setup', UsuariosCtrl.UsuarioMongoDb);
 app.get('/paises', PaisesCtrl.CatalogoPaises );
 app.get('/visitante', PaisesCtrl.Visitante );
+
 
 
 

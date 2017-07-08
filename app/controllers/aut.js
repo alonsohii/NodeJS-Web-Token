@@ -53,7 +53,7 @@ exports.autentificar = function(req, res) {
 exports.autentificarMysql = function(req,res){
 
 
- db.query('SELECT correo, pw FROM rank.bp_personas    WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
+ db.query('SELECT correo, pw FROM bp_personas    WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
 
 if(rows != undefined){
 	  
@@ -63,6 +63,7 @@ if(rows != undefined){
 	                   .update(req.body.password)
 	                   .digest('hex');
 console.log(hash);
+console.log(rows[0]);
 console.log(rows[0].pw)
 
  	    if (rows[0].pw != hash) {

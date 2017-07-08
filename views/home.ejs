@@ -47,7 +47,24 @@ $(document).ready(function() {
 </head>
 <body>
 <%- include('header'); %>
+
+
+
 <div class="container containerBorder">
+
+
+
+  <div class="alert alert-success" id="Correcsto">
+  <strong>  AreaidEmpelado: </strong><%= query.AreaidEmpelado %> <br>
+<strong>OficinaIdEmpleado: </strong><%= query.OficinaIdEmpleado %><br>
+<strong>EmpleadoId:</strong> <%= query.EmpleadoId %><br>
+<strong>Nivel:</strong> <%= query.Nivel %><br>
+
+  </div>
+
+
+
+
   <div class="row">
 <div class="col-xs-12" id="demoContainer">
   <div class="alert alert-success" id="Correcto">
