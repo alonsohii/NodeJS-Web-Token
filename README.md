@@ -1,4 +1,4 @@
-# Node Token Authentication Rank
+# Node Token 
 
 This repo uses JSON Web Tokens and the [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) package to implement token based authentication on a simple Node.js API.
 

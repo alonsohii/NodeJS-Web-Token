@@ -1,0 +1,124 @@
+<html>
+<head>
+  <title> <%= title %></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+  <script type="text/javascript" src="http://alasql.org/codex/lib/alasql/alasql.min.js"></script>
+  <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+
+   <script type="text/javascript" src=" ../js/adicional.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> 
+
+
+  <link rel="stylesheet" href="../css/adicional.css">
+  <link rel="stylesheet" href="../css/prettyForm.css">
+
+  <script>
+
+$(document).ready(function() {
+         $("#Notificacion").hide();
+          $("#Correcto").hide();
+     $("#login").click(function(){
+
+        $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
+          .done(function(data) {
+           // alert( "second success" );
+           debugger;
+           if(data.success){
+
+               localStorage.setItem('tk', data.token);
+               window.location="/home";
+
+           }else{
+            $("#Notificacion").hide(350);
+            $("#Notificacion").show(350);
+            $("#textnot").text("Error:Su correo o usuario no son correctos.");
+           }
+
+          // debugger;
+          })
+          .fail(function() {
+           // alert( "error" );
+          })
+
+
+      });
+
+});
+</script>
+
+</head>
+<body>
+<%- include('header'); %>
+<div class="container ">
+  <div class="row">
+<div class="col-xs-12" id="demoContainer">
+  <div class="alert alert-success" id="Correcto">
+    <strong>Bien!</strong> Registro Hecho exitosamente.
+  </div>
+<div class="alert alert-danger" id="Notificacion" >
+ <p id="textnot" ></p>
+</div>
+                
+
+
+
+<div class="login">
+  <h1>Crea un nuevo proyecto!</h1>
+    <form method="post">
+
+          
+            <select  name="color" id="ComboCategorias" placeholder = "Selecciona una categoria:" >
+               <option >-- Selecciona una categoria --</option>
+            </select>
+
+            <select  name="color" id="ComboSubCategorias" placeholder = "Selecciona una categoria:" >
+               <option >-- Selecciona una categoria --</option>
+            </select>
+    
+      <input type="text" name="u" placeholder="Username" required="required" />
+        <input type="password" name="p" placeholder="Password" required="required" />
+        <button type="submit" class="btn btn-primary btn-block btn-large">Crear nuevo proyecto.</button>
+    </form>
+</div>
+
+<script>
+        $(function() {
+            $.when( $.get("http://freelanceworks.com.pc:8080/categorias", function(data, status){
+               debugger;
+                     
+
+                     $.each( data, function( key, value ) {
+                      $( "#ComboCategorias" ).append( " <option value='"+value.id+"'>" + value.categoria +"</option>" );
+                    });
+
+              })).then(function( data, textStatus, jqXHR ) {
+                // Paises();
+
+            });
+              
+             
+             
+        });
+
+           $(document).on('change','#ComboCategorias',function(){
+               $.get("http://freelanceworks.com.pc:8080/subcategorias?cat="+$("#ComboCategorias").val(), function(data, status){
+                   if(data.length>0){
+                        $.each( data, function( key, value ) {
+                           $( "#ComboSubCategorias" ).html("");
+                          $( "#ComboSubCategorias" ).append( " <option value='"+value.id+"'>" + value.subcategoria +"</option>" );
+                        });
+
+                   }
+
+
+              })
+          });
+</script>
+  </div>
+</body>
+</html>

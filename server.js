@@ -22,12 +22,12 @@ var express 	= require('express'),
     ejs = require('ejs');
     const cors = require('cors');
     const corsOptions = {
-      origin: 'http://localhost:8080'
+      origin: 'http://freelanceworks.com.pc:8080'
     }
 
 
 
-/** facebook login **/
+/** facebook login 
 // Configure the Facebook strategy for use by Passport.
 //
 // OAuth 2.0-based strategies require a `verify` function which receives the
@@ -72,8 +72,8 @@ passport.deserializeUser(function(obj, cb) {
 var app = express();
 
 // Configure view engine to render EJS templates.
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+//app.set('views', __dirname + '/views');
+//app.set('view engine', 'ejs');
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
@@ -111,7 +111,7 @@ app.get('/profile',
     res.render('profile', { user: req.user });
   });
 
-/** facebook login **/
+ facebook login **/
 
 
 
@@ -193,6 +193,9 @@ app.get('/webdemo', function(req, res, next) {
 });
 
 Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
+Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
+
+
 
 
 
@@ -204,6 +207,9 @@ app.get('/setup', UsuariosCtrl.UsuarioMongoDb);
 app.get('/paises', PaisesCtrl.CatalogoPaises );
 app.get('/visitante', PaisesCtrl.Visitante );
 
+
+app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
+app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
 
 
 
