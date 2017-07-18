@@ -47,8 +47,15 @@ return obj;// JSON.stringify( obj);
   }
 
   function Error(msj){
+
+      if(msj!= undefined){
+
         $("#Notificacion").hide(350);
         $("#Notificacion").show(350);
         $("#Correcto").hide();
         $("#textnot").html(msj);  
+
+      }
+
+
   }

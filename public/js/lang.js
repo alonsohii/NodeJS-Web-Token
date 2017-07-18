@@ -1,8 +1,6 @@
-var langs = ['en', 'es'];
-var langCode = '';
-var langJS = null;
 
 
+/*
 var translate = function (jsdata)
 {	
 	$("[tkey]").each (function (index)
@@ -24,7 +22,7 @@ else
    translate(jQuery.data( document, "lang"));
    jQuery.removeData( document, "lang" );
 });
-
+*/
 
 	//$.getJSON('lang/en.json', translate);
 

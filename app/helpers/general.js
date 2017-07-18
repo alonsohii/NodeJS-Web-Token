@@ -47,6 +47,8 @@ module.exports.Error = function (res,error){
 module.exports.Pagina  = function(url,ruta,param,app){
 	app.get(url,function(req,res){  
 	// res.set('Content-Type', 'application/javascript');
+
+  param['ln'] =  res;
 	  res.render(ruta, param);
       res.status(200);
 	//res.sendFile(path.join(__dirname+'/app/views/registro.html'), { name: "example" });
