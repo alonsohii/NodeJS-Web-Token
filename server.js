@@ -195,6 +195,8 @@ app.get('/webdemo', function(req, res, next) {
 Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
 Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
 
+Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
+
 
 
 
@@ -210,7 +212,7 @@ app.get('/visitante', PaisesCtrl.Visitante );
 
 app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
 app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
-
+app.get('/Presupuestos', PaisesCtrl.Presupuestos );
 
 
 // ---------------------------------------------------------

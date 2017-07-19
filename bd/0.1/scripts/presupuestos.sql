@@ -1,0 +1,11 @@
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (1, 'Mini proyecto', NULL, '10', '30');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (2, 'Proyecto simple', NULL, '30', '250');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (3, 'Proyecto muy pequeño', NULL, '250', '750');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (4, 'Proyecto pequeño', NULL, '750', '1500');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (5, 'Proyecto mediano', NULL, '1500', '3000');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (6, 'Proyecto grande', NULL, '3000', '5000');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (7, 'Proyecto más grande', NULL, '5000', '10000');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (8, 'Proyecto muy grande', NULL, '10000', '20000');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (9, 'Proyecto enorme', NULL, '20000', '50000');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (10, 'Proyecto importante', NULL, '50000', '50000');
+INSERT INTO `presupuesto` (`idPresupuesto`, `descripcion`, `nombrep`, `cantidad`, `cantidad2`) VALUES (11, 'Proyecto personalizado', NULL, '0', '0');

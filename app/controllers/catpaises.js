@@ -41,6 +41,25 @@ console.log(req.query.cat);
 
 }
 
+
+// SubCategorias de proyecto
+exports.Presupuestos = function(req,res){
+console.log(req.query.cat);
+    Helper.Query(function(data){     
+       if(data!='nodata'){
+
+         res.setHeader('Content-Type', 'application/json');
+         //res.writeHead(200, {'Content-Type': 'text/plain'});
+
+        res.json(data);
+       }else{
+           res.json({ success: false });     res.status(400);
+       }
+  },"SELECT idPresupuesto as id , descripcion , cantidad as desde , cantidad2 as hasta FROM   freelancer.presupuesto",db);
+
+
+}
+
 // Categoria de paises
 exports.CatalogoPaises = function(req,res){
 

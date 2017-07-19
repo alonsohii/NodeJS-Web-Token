@@ -8,6 +8,7 @@
   <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 
    <script type="text/javascript" src=" ../js/adicional.js"></script>
+   <script src="../js/money.min.js"></script>
 
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -16,12 +17,35 @@
 
   <link rel="stylesheet" href="../css/adicional.css">
   <link rel="stylesheet" href="../css/prettyForm.css">
-    <link rel="stylesheet" href="../css/prettyForm.css">
 
+<style type="text/css">
+
+</style>
   <script>
 
 $(document).ready(function() {
-         //$("#Notificacion").hide();
+
+  var demo = function(data) {
+  fx.rates = data.rates
+  var rate = fx(1).from("USD").to("MXN")
+ // alert("£1 = $" + rate.toFixed(4))
+}
+
+$.getJSON("http://api.fixer.io/latest", demo);
+
+     $("#registrar").click(function(){
+       $("#acceso").hide();
+       $("#registrot").show();
+     });
+
+
+     $("#yatengo").click(function(){
+      
+       $("#registrot").hide();
+        $("#acceso").show();
+     });
+        // $("#acceso").hide();
+       //  $("#Notificacion").hide();
         //  $("#Correcto").hide();
      $("#login").click(function(){
 
@@ -66,11 +90,81 @@ $(document).ready(function() {
 </div>
                 
 
-<div class="login box blurred-bg tinted">
-  <h1>Crea un nuevo proyecto!</h1>
-    <form>
 
-          
+<div class=" box blurred-bg tinted">
+  <h1 class="shining">Crea un nuevo proyecto!</h1>
+
+
+<div class="row">
+  
+  <div style="display: inline; float:left;" >
+      <div class="sub-main" >
+        <button class="button-three" id="registrar" >Quiero registrar una cuenta.</button>
+      </div>
+      <div class="sub-main">
+        <button class="button-three" id="yatengo" >Ya tengo una cuenta</button>
+      </div>
+  </div>
+ 
+</div>
+
+
+<!--  Registro Inicio -->
+<div id="registrot" >
+
+
+
+  <div class="row">
+    <div class="col-md-4"><label style="color: white;"> Usuario:</label> <input type="text" name="u" placeholder="Username" required="required" /> </div>
+     <div class="col-md-4"><label style="color: white;"> Correo:</label> <input type="text" name="u" placeholder="Username" required="required" /> </div>
+  </div>
+
+    <div class="row">
+      <div class="col-md-4"><label style="color: white;">  Contrasena:</label><input type="password" name="p" placeholder="Password" required="required" /> </div>
+      <div class="col-md-4"><label style="color: white;">  Repite Contrasena:</label><input type="password" name="p" placeholder="Password" required="required" /> </div>
+    
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">     </div>
+    
+  </div>
+
+  <br>
+
+ 
+</div>
+<!--  Registro fin -->
+
+<!--  acceso Inicio -->
+<div id="acceso" style="display:none">
+
+
+
+  <div class="row">
+    <div class="col-md-4"><label style="color: white;"> Usuario:</label> <input type="text" name="u" placeholder="Username" required="required" /> </div>
+    <div class="col-md-4"><label style="color: white;">  Contrasena:</label><input type="password" name="p" placeholder="Password" required="required" /> </div>
+    
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">     <button type="submit" class="btn btn-primary btn-block btn-large">Acceder como usuario.</button> </div>
+    
+  </div>
+
+  <br>
+
+ 
+</div>
+<!--  acceso fin -->
+
+    <div id="formulario">
+
+
             <select  name="color" id="ComboCategorias" placeholder = "Selecciona una categoria:" >
                <option value="99" >-- Selecciona una categoria --</option>
             </select>
@@ -78,15 +172,48 @@ $(document).ready(function() {
             <select  name="color" id="ComboSubCategorias" placeholder = "Selecciona una categoria:" >
                <option >-- Selecciona una categoria --</option>
             </select>
-    
+
+           <div class="row">
+            <div class="col-md-8"><label style="color: white;">  Nombre del proyecto:</label><input type="text" name="nombreproyecto" placeholder="Nombre de su proyecto" required="required" /> </div>
+           </div>
+
+
+            <div class="row">
+              <div class="col-md-8"><label style="color: white;"> Describe tu proyecto:</label><textarea type="text" name="p" placeholder="Describe de que se trata tu proyecto aqui" required="required" > </textarea> </div>
+           </div>
+
+
+
+            <div class="row">
+              <div class="col-md-8"><label style="color: white;"> Selecciona el prespuesto para tu proyecto:</label>
+                 <select  name="color" id="ComboPresupuesto" placeholder = "Selecciona una categoria:" >
+                      <option >-- Selecciona un presupuesto --</option>
+                 </select>
+              </div>
+           </div>
+
+             
      <!-- <input type="text" name="u" placeholder="Username" required="required" /> -->
         <!-- <input type="password" name="p" placeholder="Password" required="required" />  -->
         <button type="submit" class="btn btn-primary btn-block btn-large">Crear nuevo proyecto.</button>
-    </form>
+    </div>
 </div>
 
 <script>
         $(function() {
+
+
+          $.get("http://freelanceworks.com.pc:8080/Presupuestos", function(data, status){
+               debugger;
+                     
+
+                     $.each( data, function( key, value ) {
+                      $( "#ComboPresupuesto" ).append( " <option value='"+value.id+"'>" + value.descripcion +" desde ("+value.desde+" USD a "+value.hasta+" USD )</option>" );
+                    });
+
+              });
+
+
             $.when( $.get("http://freelanceworks.com.pc:8080/categorias", function(data, status){
                debugger;
                      
@@ -118,7 +245,7 @@ $(document).ready(function() {
                    }
 
 
-              })
+              });
           });
 </script>
   </div>

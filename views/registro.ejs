@@ -9,10 +9,7 @@
 
    <script type="text/javascript" src=" ../js/adicional.js"></script>
 
-    
-
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> 
 
 
@@ -21,8 +18,8 @@
   <script>
   
 $(document).ready(function() {
-         $("#Notificacion").hide();
-          $("#Correcto").hide();
+         //$("#Notificacion").hide();
+         // $("#Correcto").hide();
      $("#registro").click(function(){
         
           var nombre = $("#firstName").val(),
@@ -82,18 +79,13 @@ debugger;
 <%- include('header'); %>
 
 
-
-
-
-
-
 <div class="container containerBorder">
   <div class="row">
 <div class="col-xs-12" id="demoContainer">
-  <div class="alert alert-success" id="Correcto">
+  <div class="alert alert-success" id="Correcto" style="display:none">
     <strong>Bien!</strong> Registro Hecho exitosamente.
   </div>
-<div class="alert alert-danger" id="Notificacion" >
+<div class="alert alert-danger" id="Notificacion" style="display:none" >
   <strong>Error!</strong><p id="textnot" ></p>
 </div>
                 <div id="registrationForm2" class="form-horizontal fv-form fv-form-bootstrap" novalidate="novalidate"  target="none" action="">
