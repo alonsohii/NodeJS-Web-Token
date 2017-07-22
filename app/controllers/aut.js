@@ -18,8 +18,8 @@ exports.autentificar = function(req, res) {
            res.status(400); res.send(err);
 				throw err;
 
-		};
 
+		};
 		if (!user) {
 			res.json({ success: false, message: 'Authentication failed. User not found.' });
 		} else if (user) {
@@ -32,7 +32,7 @@ exports.autentificar = function(req, res) {
 				// if user is found and password is right
 				// create a token
 				var token = jwt.sign(user, app.get('superSecret'), {
-					expiresIn: 86400 // expires in 24 hours
+					expiresIn: 100000 // expires in 24 hours
 				});
 
 				console.log(token);
@@ -55,7 +55,7 @@ exports.autentificarMysql = function(req,res){
 
  db.query('SELECT correo, pw FROM bp_personas    WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
 
-if(rows != undefined){
+if(rows != undefined &&   rows.length>0){
 	  
 
 		const secret = 'webos con frijoles@327';
@@ -64,16 +64,17 @@ if(rows != undefined){
 	                   .digest('hex');
 console.log(hash);
 console.log(rows[0]);
+console.log(rows);
 console.log(rows[0].pw)
 
- 	    if (rows[0].pw != hash) {
+ 	    if (rows[0].pw != hash && rows[0].correo != '' && rows[0].correo != null) {
 				res.json({ success: false, message: 'Authentication failed. Wrong password.' });
 			} else {
 
 				// if user is found and password is right
 				// create a token
 				var token = jwt.sign(rows[0], app.get('superSecret'), {
-					expiresIn: 5000  // expires in 24 hours
+					expiresIn: 1000  // expires in 24 hours
 
 				});
 
@@ -87,7 +88,7 @@ console.log(rows[0].pw)
 
 }else{
 
-
+		res.json({ success: false, message: 'Autentification erronea.' });
 }
 
   

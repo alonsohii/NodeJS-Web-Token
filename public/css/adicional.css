@@ -7,3 +7,114 @@
   vertical-align: middle;
   
 }
+
+.boderRed{
+  border:1px solid #ff0000;
+}
+
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css?family=Abel|Amaranth|Anton|Arimo|Baloo+Bhai|Baloo+Bhaina|Baloo+Thambi|Cantarell|Convergence|Cuprum|Days+One|Droid+Sans|Fjalla+One|Hammersmith+One|Jaldi|Lato|Montserrat|Open+Sans|Oswald|Overpass|Oxygen|PT+Sans|Quicksand|Roboto|Roboto+Condensed|Source+Sans+Pro|Ubuntu');
+
+
+/* properties of the page body */
+
+.subscribe:hover {
+	background-image: linear-gradient(220deg, rgba(255, 255, 255, 0.95) 0%, rgb(194, 233, 251) 110%);
+	box-shadow: 0 0 1px 1px #a1c3fe;
+	padding:10px 50px 50px 50px;
+	margin: 3.5em auto 0 auto;
+	border-radius: 1px;
+	text-align: center;
+	width: 100%;
+	min-height: 110px;
+	height:auto;
+	color: #445963;
+	  -webkit-transition: all 200ms ease-in;
+    -webkit-transform: scale(1.02);
+    -ms-transition: all 200ms ease-in;
+    -ms-transform: scale(1.02);   
+    -moz-transition: all 200ms ease-in;
+    -moz-transform: scale(1.02);
+    transition: all 200ms ease-in;
+    transform: scale(1.02);
+}
+/* properties of the subscribe card */
+.subscribe {
+	background-image: linear-gradient(220deg, rgba(255, 255, 255, 0.95) 0%, rgb(194, 233, 251) 110%);
+	box-shadow: 0 0 4px 1px #a1c3fe;
+	padding:10px 50px 50px 50px;
+	margin: 3.5em auto 0 auto;
+	border-radius: 1px;
+	text-align: center;
+	width: 100%;
+	min-height: 110px;
+	height:auto;
+	color: #445963;
+	border-color: black;
+	border-width: 1px;
+	
+}
+
+/* Iamge:: Email Logo  */
+.subscribe img{
+	width: 100px;
+	height: 100px;
+}
+
+/* Title Card subscribe  */
+.subscribe h2 {
+	text-transform: uppercase;
+	margin-bottom: 0;
+	margin-top: 0;
+	font-size:27px; 
+}
+/* Description of the "card subscribe" */
+.subscribe p {
+	font-family: 'Source Sans Pro', sans-serif;
+	letter-spacing: 0;
+	margin-top: 3px;
+	font-size: 16px;
+}
+
+/* email input 
+input[type=email]  {
+	font-family: 'PT Sans', sans-serif;
+	background-color: transparent;
+	text-align: center;
+	width: 100%;
+	color: #445963;
+	padding: 10px;
+	border: none;
+	outline: none;
+	margin-bottom: 30px;
+	margin-top: 18px;
+	font-size: 15px;
+	font-style: italic;
+	border-bottom: 2px solid #A1C3FE;
+}*/
+
+/* Button transmitter subscribe */
+ #botonx {
+	box-shadow: 0 0 26px 1px #a1c3fe;
+	padding: 12px 45px 12px 45px;
+	transition: 0.3s linear;
+	background: #40C4FF;
+	border-radius: 20px;
+	margin-top: 10px;
+	border: none;
+	outline: none;
+	font-size: 1em;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+#botonx:hover{
+   cursor: pointer;
+	transform: translatey(-3px );
+	box-shadow: 0 0 6px #a1c3fe;
+}
+#botonx:active{
+	transform: translatey(3px );
+	box-shadow: 0 0 0px #a1c3fe;
+}

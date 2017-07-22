@@ -23,7 +23,94 @@
 </style>
   <script>
 
+var loge;
+
 $(document).ready(function() {
+
+
+
+  $("#Notificacion").hide();
+    $("#Correcto").hide();
+
+       $("#registro").click(function(){
+        // ComboCategorias   ComboSubCategorias nombreproyecto descripcionproyecto ComboPresupuesto persupuestado
+        // #ComboCategorias,#ComboSubCategorias,#nombreproyecto,#descripcionproyecto,#ComboPresupuesto,#persupuestado
+          var nombre = $("#firstName").val(),
+           pw = $("#pw").val(),
+           pw2 = $("#pw2").val(),
+           email = $("#email").val(),
+           categorias = $("#ComboCategorias").val(),
+           subcategorias = $("#ComboSubCategorias").val(),
+           nombreproyecto = $("#nombreproyecto").val(),
+           descripcion = $("#descripcionproyecto").val(),
+           ComboPresupuesto = $("#ComboPresupuesto").val(),
+           persupuestado = $("#persupuestado").val();
+
+            var esvalido  = false;
+            var campos = ["Nombre de Usuario", "Email","Password","Categoria","Sub-Categoria","Nombre del proyecto", "Descripcion del proyecto","Presupuesto", "Presupuesto personalizado"];
+            var valores;
+
+           if(loge==1){
+               valores = '#ComboCategorias,#ComboSubCategorias,#nombreproyecto,#descripcionproyecto,#ComboPresupuesto';
+           }else{
+               valores = '#firstName,#email,#pw,#ComboCategorias,#ComboSubCategorias,#nombreproyecto,#descripcionproyecto,#ComboPresupuesto';
+           }
+
+           if(ComboPresupuesto == 11){
+              valores += ',#persupuestado';
+           }
+            
+            esvalido = validarCampos2(valores);
+
+            if(esvalido){
+               if(loge == 1) // esta logeado
+               { 
+                 InsertarProyecto();
+
+               }else{
+                debugger;
+                      if(pw==pw2){
+
+                           $("#Notificacion").hide(350);
+                                                     $.post( "http://localhost:8080/usuario", CamposJson('#firstName,#pw,#email'))
+                                                      .done(function( data ) {
+
+                                                        if(data.usuario==1 && !data.success){
+                                                             Error('Este usuario ya se encuentra registrado.');
+                                                        }else{
+
+                                                            if(!data.success){
+                                                                 Error('Este correo ya se encuentra registrado.');
+                                                            }else{
+                                                                  $("#Correcto").hide(50);
+                                                                  $("#Correcto").show(350);
+                                                                  InsertarProyecto();
+                                                            }
+                                                        }
+
+                                                      });
+
+
+                      }else{
+                             Error('La contrasena no coincide.');
+
+                      }
+               }
+            }else{
+
+            }
+
+      });
+
+
+function InsertarProyecto(){
+                             $("#Notificacion").hide(350);
+        $.post( "http://localhost:8080/InsertarProyecto", CamposJson('#ComboCategorias,#ComboSubCategorias,#nombreproyecto,#descripcionproyecto,#ComboPresupuesto,#persupuestado'))
+          .done(function( data ) {
+            
+
+        });
+}
 
   var demo = function(data) {
   fx.rates = data.rates
@@ -36,27 +123,39 @@ $.getJSON("http://api.fixer.io/latest", demo);
      $("#registrar").click(function(){
        $("#acceso").hide();
        $("#registrot").show();
+       $("#formulario").show();
+       $("#InfoCuenta").hide();
      });
 
 
      $("#yatengo").click(function(){
       
        $("#registrot").hide();
-        $("#acceso").show();
+       $("#acceso").show();
+       $("#formulario").hide();
+       $("#InfoCuenta").show();
+       
+        
      });
         // $("#acceso").hide();
        //  $("#Notificacion").hide();
         //  $("#Correcto").hide();
      $("#login").click(function(){
 
-        $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
+        $.post( "http://localhost:8080/api/authenticate", { name: $('#Logemail').val() , password: $('#Logpw').val() })
           .done(function(data) {
            // alert( "second success" );
            debugger;
            if(data.success){
 
                localStorage.setItem('tk', data.token);
-               window.location="/home";
+               loge = 1;
+                $('#botones').hide();
+                $("#acceso").hide();
+                $("#registrot").hide();
+                $("#formulario").show();
+                $("#InfoCuenta").hide();
+                $("#Notificacion").hide(350);
 
            }else{
             $("#Notificacion").hide(350);
@@ -95,7 +194,7 @@ $.getJSON("http://api.fixer.io/latest", demo);
   <h1 class="shining">Crea un nuevo proyecto!</h1>
 
 
-<div class="row">
+<div class="row" id="botones">
   
   <div style="display: inline; float:left;" >
       <div class="sub-main" >
@@ -112,16 +211,14 @@ $.getJSON("http://api.fixer.io/latest", demo);
 <!--  Registro Inicio -->
 <div id="registrot" >
 
-
-
   <div class="row">
-    <div class="col-md-4"><label style="color: white;"> Usuario:</label> <input type="text" name="u" placeholder="Username" required="required" /> </div>
-     <div class="col-md-4"><label style="color: white;"> Correo:</label> <input type="text" name="u" placeholder="Username" required="required" /> </div>
+    <div class="col-md-4"><label style="color: white;"> Usuario:</label> <input  nv='Usuario' type="text" name="firstName" id="firstName"  placeholder="Username" required="required" /> </div>
+     <div class="col-md-4"><label style="color: white;"> Correo:</label> <input nv='Correo' type="text" name="email" id="email"  placeholder="Username" required="required" /> </div>
   </div>
 
     <div class="row">
-      <div class="col-md-4"><label style="color: white;">  Contrasena:</label><input type="password" name="p" placeholder="Password" required="required" /> </div>
-      <div class="col-md-4"><label style="color: white;">  Repite Contrasena:</label><input type="password" name="p" placeholder="Password" required="required" /> </div>
+      <div class="col-md-4"><label style="color: white;">  Contrasena:</label><input nv='Password' type="password"  name="pw" id="pw" placeholder="Password" required="required" /> </div>
+      <div class="col-md-4"><label style="color: white;">  Repite Contrasena:</label><input type="password" name="pw2"  id="pw2" placeholder="Password" required="required" /> </div>
     
   </div>
 
@@ -144,15 +241,15 @@ $.getJSON("http://api.fixer.io/latest", demo);
 
 
   <div class="row">
-    <div class="col-md-4"><label style="color: white;"> Usuario:</label> <input type="text" name="u" placeholder="Username" required="required" /> </div>
-    <div class="col-md-4"><label style="color: white;">  Contrasena:</label><input type="password" name="p" placeholder="Password" required="required" /> </div>
+    <div class="col-md-4"><label style="color: white;"> Usuario:</label> <input type="text" nv='Usuario'  id="Logemail" name="email" placeholder="Username" required="required" /> </div>
+    <div class="col-md-4"><label style="color: white;">  Contrasena:</label><input nv='Password' type="password" id="Logpw" name="pw" placeholder="Password" required="required" /> </div>
     
   </div>
 
 
   <div class="row">
     <div class="col-md-4"></div>
-    <div class="col-md-4">     <button type="submit" class="btn btn-primary btn-block btn-large">Acceder como usuario.</button> </div>
+    <div class="col-md-4">     <button type="submit" id="login" class="btn btn-primary btn-block btn-large">Acceder como usuario.</button> </div>
     
   </div>
 
@@ -165,38 +262,46 @@ $.getJSON("http://api.fixer.io/latest", demo);
     <div id="formulario">
 
 
-            <select  name="color" id="ComboCategorias" placeholder = "Selecciona una categoria:" >
+            <select  nv='Categorias' name="color" id="ComboCategorias" name="ComboCategorias" placeholder = "Selecciona una categoria:" >
                <option value="99" >-- Selecciona una categoria --</option>
             </select>
 
-            <select  name="color" id="ComboSubCategorias" placeholder = "Selecciona una categoria:" >
-               <option >-- Selecciona una categoria --</option>
+            <select nv='Sub-CategoriaS'  name="color" id="ComboSubCategorias" name="ComboSubCategorias" placeholder = "Selecciona una categoria:" >
+               <option value="99">-- Selecciona una categoria --</option>
             </select>
 
            <div class="row">
-            <div class="col-md-8"><label style="color: white;">  Nombre del proyecto:</label><input type="text" name="nombreproyecto" placeholder="Nombre de su proyecto" required="required" /> </div>
+            <div class="col-md-8"><label style="color: white;">  Nombre del proyecto:</label>
+            <input nv='Nombre del proyecto' type="text" id="nombreproyecto" name="nombreproyecto" placeholder="Nombre de su proyecto" required="required" /> </div>
            </div>
-
 
             <div class="row">
-              <div class="col-md-8"><label style="color: white;"> Describe tu proyecto:</label><textarea type="text" name="p" placeholder="Describe de que se trata tu proyecto aqui" required="required" > </textarea> </div>
+              <div class="col-md-8"><label style="color: white;"> Describe tu proyecto:</label>
+              <textarea nv='Descripcion del proyecto' type="text" id="descripcionproyecto" name="descripcionproyecto" placeholder="Describe de que se trata tu proyecto aqui" required="required" > </textarea> </div>
            </div>
-
 
 
             <div class="row">
               <div class="col-md-8"><label style="color: white;"> Selecciona el prespuesto para tu proyecto:</label>
-                 <select  name="color" id="ComboPresupuesto" placeholder = "Selecciona una categoria:" >
-                      <option >-- Selecciona un presupuesto --</option>
+                 <select nv='Presupuesto seleccionado'  name="color" id="ComboPresupuesto" name="ComboPresupuesto" placeholder = "Selecciona una categoria:" >
+                      <option value="99" >-- Selecciona un presupuesto --</option>
                  </select>
               </div>
            </div>
 
-             
-     <!-- <input type="text" name="u" placeholder="Username" required="required" /> -->
-        <!-- <input type="password" name="p" placeholder="Password" required="required" />  -->
-        <button type="submit" class="btn btn-primary btn-block btn-large">Crear nuevo proyecto.</button>
+           <div class="row" id="Personalizado" style="display:none">
+            <div class="col-md-3"><label style="color: white;">  Presupuesto personalizado:</label>
+              <input nv='Presupuesto personalizado' type="number" id="persupuestado" name="persupuestado" placeholder="Ejemplo: 200"  />  </div>
+            <div class="col-md-3" style="color: white;padding-top: 35px;">  USD (Dolares Americanos)</div>
+           </div>
+
+           <button id="registro" type="submit" class="btn btn-primary btn-block btn-large">Crear nuevo proyecto.</button>
+
+
     </div>
+           <div class="alert alert-info" id="InfoCuenta" style="display:none">
+              <strong>Si tiene una cuenta acceda para poder proceder con la creacion de su proyecto de lo contrario<br>puede proceder a registrar una nueva cuenta seleccionando "Quiero registrar una cuenta"
+            </div>
 </div>
 
 <script>
@@ -204,19 +309,22 @@ $.getJSON("http://api.fixer.io/latest", demo);
 
 
           $.get("http://freelanceworks.com.pc:8080/Presupuestos", function(data, status){
-               debugger;
-                     
+              
 
                      $.each( data, function( key, value ) {
-                      $( "#ComboPresupuesto" ).append( " <option value='"+value.id+"'>" + value.descripcion +" desde ("+value.desde+" USD a "+value.hasta+" USD )</option>" );
+                      if(value.id == 11){
+                         $( "#ComboPresupuesto" ).append( " <option value='"+value.id+"'>" + value.descripcion +"</option>" );
+                      }else{
+                          $( "#ComboPresupuesto" ).append( " <option value='"+value.id+"'>" + value.descripcion +" desde ("+value.desde+" USD a "+value.hasta+" USD )</option>" );
+
+                      }
+
                     });
 
               });
 
 
             $.when( $.get("http://freelanceworks.com.pc:8080/categorias", function(data, status){
-               debugger;
-                     
 
                      $.each( data, function( key, value ) {
                       $( "#ComboCategorias" ).append( " <option value='"+value.id+"'>" + value.categoria +"</option>" );
@@ -247,6 +355,31 @@ $.getJSON("http://api.fixer.io/latest", demo);
 
               });
           });
+
+           $(document).on('change','#ComboPresupuesto',function(){
+              if($('#ComboPresupuesto').val() == 11){
+                $('#Personalizado').show();
+              }else{
+                $('#Personalizado').hide();
+              }
+           });
+
+           
+
+           $.get("http://freelanceworks.com.pc:8080/api/?token="+localStorage.getItem('tk'), function(data, status){
+              
+              if(data.success){
+                loge = 1;
+                $('#botones').hide();
+                $("#acceso").hide();
+                $("#registrot").hide();
+              }else{
+                loge = 0;
+                $('#botones').show();
+                $("#registrot").show();
+              }
+
+           });
 </script>
   </div>
 </body>

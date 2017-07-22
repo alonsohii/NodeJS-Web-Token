@@ -8,6 +8,7 @@ var express 	= require('express'),
     AutCtrl = require('./app/controllers/aut'),
     UsuariosCtrl = require('./app/controllers/users'),
     PaisesCtrl = require('./app/controllers/catpaises'),
+    ProyectCtrl = require('./app/controllers/projectCtr'),
     Middleware = require('./app/middleware'),
     Helper   = require('./app/helpers/general'),
     session = require('express-session'),
@@ -24,6 +25,7 @@ var express 	= require('express'),
     const corsOptions = {
       origin: 'http://freelanceworks.com.pc:8080'
     }
+
 
 
 
@@ -183,6 +185,9 @@ app.use(express.static(__dirname + '/public'));
 app.post('/usuario', UsuariosCtrl.InsertarUsuario );
 app.post('/reset', UsuariosCtrl.RandomPassword );
 
+app.post('/InsertarProyecto',ProyectCtrl.InsertarProyecto);
+
+
 Helper.Pagina('/registro','registro',{ title: "Registro de Usuarios"} , app);
 Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
 Helper.Pagina('/demo','registro',{ title: "Diferente"},app);
@@ -196,6 +201,7 @@ Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
 Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
 
 Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
+Helper.Pagina('/search','search',{ title: "Buscar Proyecto"},app);
 
 
 
@@ -210,7 +216,9 @@ app.get('/paises', PaisesCtrl.CatalogoPaises );
 app.get('/visitante', PaisesCtrl.Visitante );
 
 
+
 app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
+app.get('/Projects', ProyectCtrl.GetProjects );
 app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
 app.get('/Presupuestos', PaisesCtrl.Presupuestos );
 
@@ -238,7 +246,7 @@ apiRoutes.use(Middleware.Verificar);
 // authenticated routes
 // ---------------------------------------------------------
 apiRoutes.get('/', function(req, res) {
-	res.json({ message: 'Welcome to the coolest API on earth!' });
+	res.json({ success:true, message: 'Welcome to the coolest API on earth!' });
 });
 
 apiRoutes.get('/users', function(req, res) {

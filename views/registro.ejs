@@ -23,49 +23,49 @@ $(document).ready(function() {
      $("#registro").click(function(){
         
           var nombre = $("#firstName").val(),
-              facebook = $("#facebook").val(),
-              pw = $("#pw").val(),
-              pw2 = $("#pw2").val(),
-              email = $("#email").val(),
-              pais = $("#ComboPaises").val();
+           facebook = $("#facebook").val(),
+           pw = $("#pw").val(),
+           pw2 = $("#pw2").val(),
+           email = $("#email").val(),
+           pais = $("#ComboPaises").val();
 
 
-debugger;
-var esvalido  = false;
-var campos = ["Nombre", "Email","Password"];
-var valores = [nombre, email,pw];
-  esvalido = validarCampos(valores,campos);
 
-if(esvalido){
-  if(pw==pw2){
+            var esvalido  = false;
+            var campos = ["Nombre", "Email","Password"];
+            var valores = [nombre, email,pw];
+              esvalido = validarCampos(valores,campos);
 
-       $("#Notificacion").hide(350);
-                                 $.post( "http://localhost:8080/usuario", CamposJson('#firstName,#pw,#email,#ComboPaises'))
-                                  .done(function( data ) {
-debugger;
+            if(esvalido){
+              if(pw==pw2){
 
-                                    if(data.usuario==1 && !data.success){
-                                         Error('Este usuario ya se encuentra registrado.');
-                                    }else{
+                   $("#Notificacion").hide(350);
+                                             $.post( "http://localhost:8080/usuario", CamposJson('#firstName,#pw,#email,#ComboPaises'))
+                                              .done(function( data ) {
+          
 
-                                        if(!data.success){
-                                             Error('Este correo ya se encuentra registrado.');
-                                        }else{
-                                              $("#Correcto").hide(50);
-                                              $("#Correcto").show(350);
-                                        }
-                                    }
+                                                if(data.usuario==1 && !data.success){
+                                                     Error('Este usuario ya se encuentra registrado.');
+                                                }else{
 
-                                  });
+                                                    if(!data.success){
+                                                         Error('Este correo ya se encuentra registrado.');
+                                                    }else{
+                                                          $("#Correcto").hide(50);
+                                                          $("#Correcto").show(350);
+                                                    }
+                                                }
+
+                                              });
 
 
-  }else{
-         Error('La contrasena no coincide.');
+              }else{
+                     Error('La contrasena no coincide.');
 
-  }
-}else{
+              }
+            }else{
 
-}
+            }
 
       });
 
@@ -98,19 +98,6 @@ debugger;
 
     </div>
 
-   <!-- <div class="form-group">
-        <label class="col-xs-3 control-label">Username</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="username" />
-        </div>
-    </div> -->
-
-   <!--     <div class="form-group">
-        <label class="col-xs-3 control-label">Facebook</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="facebook" id="facebook" placeholder="www.facebook.com/usuariofb" />
-        </div>
-    </div> -->
 
     <div class="form-group">
         <label class="col-xs-3 control-label"   tkey="email" ><%- ln.__('email'); %></label>

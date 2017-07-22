@@ -16,36 +16,35 @@
 
   <link rel="stylesheet" href="../css/adicional.css">
 
-  <script>
+<script>
 
 $(document).ready(function() {
-         $("#Notificacion").hide();
-          $("#Correcto").hide();
-     $("#login").click(function(){
+    $("#Notificacion").hide();
+    $("#Correcto").hide();
+       $("#login").click(function(){
+debugger;
+          $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
+            .done(function(data) {
 
-        $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
-          .done(function(data) {
-           // alert( "second success" );
-           debugger;
-           if(data.success){
+             if(data.success){
 
-               localStorage.setItem('tk', data.token);
-               window.location="/home";
+                 localStorage.setItem('tk', data.token);
+                 window.location="/home";
 
-           }else{
-            $("#Notificacion").hide(350);
-            $("#Notificacion").show(350);
-            $("#textnot").text("Error:Su correo o usuario no son correctos.");
-           }
+             }else
+             {
+               $("#Notificacion").hide(350);
+               $("#Notificacion").show(350);
+               $("#textnot").text("Error:Su correo o usuario no son correctos.");
+             }
 
-          // debugger;
-          })
-          .fail(function() {
-           // alert( "error" );
-          })
+            })
+            .fail(function() {
+           
+            })
 
 
-      });
+        });
 
 });
 </script>
