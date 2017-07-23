@@ -45,6 +45,9 @@ console.log(req.query.cat);
 // SubCategorias de proyecto
 exports.Presupuestos = function(req,res){
 
+//Helper.Emitir();
+
+
     Helper.Query(function(data){     
        if(data!='nodata'){
 

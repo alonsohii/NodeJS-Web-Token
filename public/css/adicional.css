@@ -118,3 +118,19 @@ input[type=email]  {
 	transform: translatey(3px );
 	box-shadow: 0 0 0px #a1c3fe;
 }
+
+    .fa {
+      color: #fff;
+    }
+    
+    #userList {
+      display: none;
+    }
+    
+    #loader {
+      position: absolute;
+      z-index: 2;
+      width: 100%;
+      text-align: center;
+      top: 40%;
+    }

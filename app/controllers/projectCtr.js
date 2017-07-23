@@ -7,6 +7,12 @@ var db = require('../connection');
 var app         = express();
 app.set('superSecret', config.secret); // secret variable
 var crypto = require('crypto');
+socketIOHelper = require('../../app/helpers/socketio');
+
+var express 	= require('express'),
+    app         = express();
+
+
 
 exports.InsertarProyecto = function(req,res){
   var data = req.body;
@@ -34,7 +40,17 @@ exports.InsertarProyecto = function(req,res){
 	       if(!err){
 
 	          console.log('Proyecto insertado:', ress.insertId);   
+
+	          var server = require('http').Server(app);
+              var io = require('socket.io')(server);
+
+
+	          	socketIOHelper.set(io);
+				var receivers = require('../../app/sockets/receivers.server.sockets');
+				receivers.receivers(io);
+
 	          res.json({ success: true });     
+	          return 1;
 
 	        }else {
 
@@ -47,6 +63,9 @@ exports.InsertarProyecto = function(req,res){
 // Obtener Proyectos
 exports.GetProjects = function(req,res){
 
+
+
+
     Helper.Query(function(data){     
        if(data!='nodata'){
 
@@ -58,3 +77,5 @@ exports.GetProjects = function(req,res){
   },"SELECT * from V_PROYECTOS",db);
 
 }
+
+

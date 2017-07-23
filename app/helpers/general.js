@@ -1,5 +1,15 @@
 const nodemailer = require('nodemailer');
 
+express   = require('express'),
+    app         = express();
+
+    var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+
+
+
+
 exports.Query = function(db,query){
 var rowss ;
 db.query(query, function(err, rows, fields) {
@@ -8,7 +18,7 @@ db.query(query, function(err, rows, fields) {
   	console.log( demo(rows));
   // rowss =  demo(rows);
   // demo(rows);
-  rowss ='puta madre';
+  rowss ='p';
 
   }else {
   	console.log('mal');

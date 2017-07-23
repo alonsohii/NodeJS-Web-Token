@@ -16,6 +16,8 @@ var express 	= require('express'),
     passport = require('passport'),
     config = require('./oauth.js'),
     Strategy = require('passport-facebook').Strategy,
+    socketIOHelper = require('./app/helpers/socketio');
+
    // TwitterStrategy = require('passport-twitter').Strategy,
    // GithubStrategy = require('passport-github2').Strategy,
    // GoogleStrategy = require('passport-google-oauth2').Strategy,
@@ -28,6 +30,75 @@ var express 	= require('express'),
 
 
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+global.globalIo = io;
+
+
+
+
+
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
+/** SOCKET IO **/
+
+var usernames = {};
+var rooms = [];
+
+//io.sockets.on('connection', Helper.Emitir );
+
+io.sockets.on('connection', function (socket) {
+
+    socket.on('adduser', function (data) {
+        var username = data.username;
+        var room = data.room;
+
+        if (rooms.indexOf(room) != -1) {
+            socket.username = username;
+            socket.room = room;
+            usernames[username] = username;
+            socket.join(room);
+
+            socket.emit('updatechat', 'SERVER', 'You are connected. Start chatting');
+            socket.broadcast.to(room).emit('updatechat', 'SERVER', username + ' has connected to this room');
+        } else {
+            socket.emit('updatechat', 'SERVER', 'Please enter valid code.');
+        }
+    });
+    
+    socket.on('createroom', function (data) {
+           //   console.log(data);
+        var new_room = ("" + Math.random()).substring(2, 7);
+        rooms.push(new_room);
+        data.room = new_room;
+       // socket.emit('updatechat', 'SERVER', 'Your room is ready, invite someone using this ID:' + new_room);
+       // console.log(new_room);
+
+        socket.emit('roomcreated', data);
+
+    });
+
+    socket.on('sendchat', function (data) {
+               console.log(' mensaje data:'+data + ' - '+socket.room);
+        io.sockets.in(socket.room).emit('updatechat', socket.username, data);
+
+    });
+
+    socket.on('disconnect', function () {
+        delete usernames[socket.username];
+        io.sockets.emit('updateusers', usernames);
+        if (socket.username !== undefined) {
+            socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
+            socket.leave(socket.room);
+        }
+    });
+});
+
+/** SOCKET IO **/
 
 /** facebook login 
 // Configure the Facebook strategy for use by Passport.
@@ -149,14 +220,11 @@ app.use(session({
     cookie: { maxAge: 60000 }
 }));
 
+
+
+
 app.use(i18n.init);
 
-app.get('/demox', function (req, res) {
-    res.render('registro', {
-    i18n: res,
-    title:"asdsada"
-    })
-});
 
 
 
@@ -264,7 +332,7 @@ app.use('/api', apiRoutes);
 // =================================================================
 // start the server ================================================
 // =================================================================
-app.listen(port);
+server.listen(port);
 console.log('Magic happens at http://localhost:' + port);
 
 

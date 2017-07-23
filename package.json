@@ -1,6 +1,9 @@
 {
   "name": "n",
   "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "dependencies": {
     "body-parser": "^1.15.0",
     "connect-ensure-login": "^0.1.1",
@@ -27,6 +30,10 @@
     "passport-instagram": "^1.0.0",
     "passport-twitter": "^1.0.3",
     "path": "*",
-    "request-ip": "*"
+    "request-ip": "*",
+    "socket.io": "^2.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
