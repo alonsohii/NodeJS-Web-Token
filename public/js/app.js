@@ -29,7 +29,8 @@
     user.date = new Date().getTime();
     user.image = 'http://dummyimage.com/250x250/000/fff&text=' + username.charAt(0).toUpperCase();
     //$scope.users.push(user);
-    $('#chat').append(user.message+'<br>');
+    //console.log(data);
+    $('#chat').append(user.username+ ':'+user.message+'<br>');
   });
 
   socket.on('roomcreated', function (data) {
@@ -62,8 +63,8 @@ function joinSala(data){
 
 function mensaje(msg){
 
-debugger;
    // socket.on('connect', function () { });
+   debugger;
     socket.emit('sendchat', msg);
 
 }
