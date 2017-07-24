@@ -163,3 +163,23 @@ exports.UsuarioMongoDb = function(req,res){
 
 }
 
+
+
+// Obtener Proyectos
+exports.GetUsers = function(req,res){
+
+
+
+
+    Helper.Query(function(data){     
+       if(data!='nodata'){
+
+         res.setHeader('Content-Type', 'application/json');
+         res.json(data);
+       }else{
+           res.json({ success: false });     res.status(400);
+       }
+  },"select * from freelancer.bp_personas",db);
+
+}
+

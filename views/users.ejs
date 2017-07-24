@@ -26,8 +26,8 @@
   <link rel="stylesheet" href="../css/adicional.css">
   <link rel="stylesheet" href="../css/search.css">
 <script src="/socket.io/socket.io.js "></script>
+
 <script type="text/javascript" src="../js/app.js "></script>
-<script type="text/javascript" src="../js/angularjs.js "></script>
 
   <style type="text/css">
     body{
@@ -38,52 +38,50 @@
   </style>
 <script>
 
+var app = angular.module('app', [])
+.filter('startFrom', function(){
+  return function(input, start){
+    start = +start;
+    return input.slice(start);
+  }
+})
+.controller('paginationCtrl', function($scope,$http){
+  $scope.currentPage = 0;
+  $scope.itemsPerPage = 1005;
+  $scope.items = [];
+  /*for(var i=0; i<25; i++){
+    $scope.items.push('Product ' + i);
+  } */
+  $http.get("http://freelanceworks.com.pc:8080/users")
+    .then(function(response) {
+      debugger;
+      $scope.items = response.data;
+  }); 
+  $scope.firstPage = function() {
+    return $scope.currentPage == 0;
+  }
+  $scope.lastPage = function() {
+    var lastPageNum = Math.ceil($scope.items.length / $scope.itemsPerPage - 1);
+    return $scope.currentPage == lastPageNum;
+  }
+  $scope.numberOfPages = function(){
+    return Math.ceil($scope.items.length / $scope.itemsPerPage);
+  }
+  $scope.startingItem = function() {
+    return $scope.currentPage * $scope.itemsPerPage;
+  }
+  $scope.pageBack = function() {
+    $scope.currentPage = $scope.currentPage - 1;
+  }
+  $scope.pageForward = function() {
+    $scope.currentPage = $scope.currentPage + 1;
+  }
+});
 
 
 
-/*
 
-(function() {
-  
-    
-    angular.module('app')
-    
-        .controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
-            $scope.main = {
-                page: 1,
-                take: 15
-            };
-            
-            $scope.loadPage = function() {
-                // You could use Restangular here with a route resource.
-                $http.get('http://freelanceworks.com.pc:8080/projects').success(function(data){
-                    // users from your api
 
-                    $scope.main.users = data;
-                    
-                    // number of pages of users
-                    $socpe.main.pages = 10;
-                });
-            };
-            
-            $scope.nextPage = function() {
-                if ($scope.main.page < $scope.main.pages) {
-                    $scope.main.page++;
-                    $scope.loadPage();
-                }
-            };
-            
-            $scope.previousPage = function() {
-                if ($scope.main.page > 1) {
-                    $scope.main.page--;
-                    $scope.loadPage();
-                }
-            };
-        }]);
-
-});*/
-</script>
-<script>
 
 $(document).ready(function() {
     $("#Notificacion").hide();
@@ -113,6 +111,9 @@ $(document).ready(function() {
         });
 
 });
+
+
+
 </script>
 
 </head>
@@ -131,11 +132,10 @@ $(document).ready(function() {
 
 
 
-
-
  <p id="chat"></p>
 
 
+ <p id="jk"></p>
 
 
 
@@ -146,44 +146,40 @@ $(document).ready(function() {
 
 
 
-<div ng-app="app" ng-controller="paginationCtrl">
 
-  <input type="text" placeholder="Find the friend" ng-model="searchText">
-  <div id="content">
-   
-  <div  ng-repeat="item in items | startFrom: startingItem() | limitTo: itemsPerPage | filter:searchText">
-
-
-<div class="subscribe">
-<!--  Image:: Email Logo  -->
-
-
-<!--  Title Card subscribe  -->
-  <h2></h2>
-<!--  Description -->
-  <p>   {{ item.nombre }} </p>
-
-  {{ item.desarrollo }}
-  <br>
-  <button id="botonx">Postularme</button>
-
-  </div>
-
-
-
-    </div>
- 
-    <div id="pagination" class="row">
-      <button class="pull-left btn btn-primary btn-sm" ng-disabled="firstPage()" ng-click="pageBack()">Atras</button>
-      <span>{{currentPage+1}} de {{numberOfPages()}}</span>
-      <button class="pull-right  btn btn-primary btn-sm" ng-disabled="lastPage()" ng-click="pageForward()">Siguiente</button>
-    </div>
-  </div>
-</div>
+<script>
 
 
 
 
+
+function chat(x){
+  var actual = 4;
+  //debugger;
+  if(actual>x){
+    var canal =  (actual+''+x).toString();
+  }else{
+    var canal =  (x+''+actual).toString();
+  }
+
+
+  crearSala({username: 'mario', newroom:canal});
+}
+
+
+$.get( "http://freelanceworks.com.pc:8080/users", function( data ) {
+
+        $.each( data, function( key, value ) {
+
+          $( "#jk" ).append( value.username  +' - ' + value.idbp_personas + ' <button   onclick="chat('+value.idbp_personas+')" id="botonx">Chatear</button><br>' );
+       });
+});
+
+
+
+
+
+</script>
 
   </div>
 </body>

@@ -1,6 +1,5 @@
 
 
-
 var app = angular.module('app', [])
 .filter('startFrom', function(){
   return function(input, start){
@@ -40,6 +39,7 @@ var app = angular.module('app', [])
     $scope.currentPage = $scope.currentPage + 1;
   }
 });
+
 
 
 

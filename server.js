@@ -71,12 +71,13 @@ io.sockets.on('connection', function (socket) {
     });
     
     socket.on('createroom', function (data) {
-           //   console.log(data);
-        var new_room = ("" + Math.random()).substring(2, 7);
+            
+        var new_room =   parseInt( data.newroom, 10);  //("" + Math.random()).substring(2, 7);parseInt(req.params.year, 10);
         rooms.push(new_room);
         data.room = new_room;
        // socket.emit('updatechat', 'SERVER', 'Your room is ready, invite someone using this ID:' + new_room);
        // console.log(new_room);
+        console.log(data);
 
         socket.emit('roomcreated', data);
 
@@ -188,12 +189,6 @@ app.get('/profile',
 
 
 
-
-
-
-
-
-
 var i18n = require('i18n');
 
 i18n.configure({
@@ -270,6 +265,7 @@ Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
 
 Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
 Helper.Pagina('/search','search',{ title: "Buscar Proyecto"},app);
+Helper.Pagina('/usuarios','users',{ title: "Usuarios"},app);
 
 
 
@@ -283,6 +279,7 @@ app.get('/setup', UsuariosCtrl.UsuarioMongoDb);
 app.get('/paises', PaisesCtrl.CatalogoPaises );
 app.get('/visitante', PaisesCtrl.Visitante );
 
+app.get('/users', UsuariosCtrl.GetUsers);
 
 
 app.get('/Categorias', PaisesCtrl.CategoriasProyecto );

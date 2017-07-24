@@ -22,7 +22,7 @@ $(document).ready(function() {
     $("#Notificacion").hide();
     $("#Correcto").hide();
        $("#login").click(function(){
-debugger;
+
           $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
             .done(function(data) {
 
