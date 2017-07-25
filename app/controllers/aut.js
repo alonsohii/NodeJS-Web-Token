@@ -53,7 +53,7 @@ exports.autentificar = function(req, res) {
 exports.autentificarMysql = function(req,res){
 
 
- db.query('SELECT correo, pw FROM bp_personas    WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
+ db.query('SELECT correo, pw  , idbp_personas  as id FROM bp_personas    WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
 
 if(rows != undefined &&   rows.length>0){
 	  
@@ -62,14 +62,16 @@ if(rows != undefined &&   rows.length>0){
      	const hash = crypto.createHmac('sha256', secret)
 	                   .update(req.body.password)
 	                   .digest('hex');
-console.log(hash);
-console.log(rows[0]);
-console.log(rows);
-console.log(rows[0].pw)
+	                   
+			console.log(hash);
+			console.log(rows[0]);
+			console.log(rows);
+			console.log(rows[0].pw)
 
  	    if (rows[0].pw != hash && rows[0].correo != '' && rows[0].correo != null) {
 				res.json({ success: false, message: 'Authentication failed. Wrong password.' });
 			} else {
+
 
 				// if user is found and password is right
 				// create a token
