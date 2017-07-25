@@ -38,7 +38,8 @@ global.globalIo = io;
 
 
 
-
+//var online = {};
+global.Globalonline = [];
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
@@ -52,6 +53,8 @@ var rooms = [];
 //io.sockets.on('connection', Helper.Emitir );
 
 io.sockets.on('connection', function (socket) {
+   socket.join('masterroom');
+   console.log('xx');
 
     socket.on('adduser', function (data) {
         var username = data.username;
@@ -62,6 +65,7 @@ io.sockets.on('connection', function (socket) {
             socket.room = room;
             usernames[username] = username;
             socket.join(room);
+
 
             socket.emit('updatechat', 'SERVER', 'You are connected. Start chatting');
             socket.broadcast.to(room).emit('updatechat', 'SERVER', username + ' has connected to this room');
@@ -91,6 +95,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         delete usernames[socket.username];
+        console.log('desconectado');
         io.sockets.emit('updateusers', usernames);
         if (socket.username !== undefined) {
             socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
@@ -218,9 +223,9 @@ app.use(session({
 
 
 
+
+
 app.use(i18n.init);
-
-
 
 
 // mn
@@ -311,6 +316,8 @@ apiRoutes.use(Middleware.Verificar);
 // authenticated routes
 // ---------------------------------------------------------
 apiRoutes.get('/', function(req, res) {
+  req.session.userid;
+  console.log(req.get('decoded'));
 	res.json({ success:true, message: 'Welcome to the coolest API on earth!' });
 });
 
