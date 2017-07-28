@@ -32,7 +32,7 @@ var express 	= require('express'),
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
+var idactual;
 global.globalIo = io;
 
 
@@ -53,8 +53,8 @@ var rooms = [];
 //io.sockets.on('connection', Helper.Emitir );
 
 io.sockets.on('connection', function (socket) {
-   socket.join('masterroom');
-   console.log('xx');
+  // socket.join('masterroom');
+   console.log('conectado');
 
     socket.on('adduser', function (data) {
         var username = data.username;
@@ -96,6 +96,12 @@ io.sockets.on('connection', function (socket) {
     socket.on('disconnect', function () {
         delete usernames[socket.username];
         console.log('desconectado');
+        if(idactual!= null){
+          var index = Globalonline.indexOf(idactual);
+            if (index > -1) {
+                Globalonline.splice(index, idactual);
+            }
+        }
         io.sockets.emit('updateusers', usernames);
         if (socket.username !== undefined) {
             socket.broadcast.emit('updatechat', 'SERVER', socket.username + ' has disconnected');
@@ -285,12 +291,15 @@ app.get('/paises', PaisesCtrl.CatalogoPaises );
 app.get('/visitante', PaisesCtrl.Visitante );
 
 app.get('/users', UsuariosCtrl.GetUsers);
+app.get('/online', UsuariosCtrl.GetUsersOnline);
 
 
 app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
 app.get('/Projects', ProyectCtrl.GetProjects );
 app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
 app.get('/Presupuestos', PaisesCtrl.Presupuestos );
+
+
 
 
 // ---------------------------------------------------------
@@ -316,8 +325,9 @@ apiRoutes.use(Middleware.Verificar);
 // authenticated routes
 // ---------------------------------------------------------
 apiRoutes.get('/', function(req, res) {
-  req.session.userid;
-  console.log(req.get('decoded'));
+ //console.log(req.decoded.id) ;
+    idactual = req.decoded.id;
+    console.log(idactual) ;
 	res.json({ success:true, message: 'Welcome to the coolest API on earth!' });
 });
 
