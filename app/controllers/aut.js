@@ -53,7 +53,7 @@ exports.autentificar = function(req, res) {
 exports.autentificarMysql = function(req,res){
 
 
- db.query('SELECT correo, pw  , idbp_personas  as id FROM bp_personas    WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
+ db.query('SELECT correo, pw    , idbp_personas  as id , username as usuario FROM bp_personas     WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
 
 if(rows != undefined &&   rows.length>0){
 	  
@@ -76,7 +76,7 @@ if(rows != undefined &&   rows.length>0){
 				// if user is found and password is right
 				// create a token
 				var token = jwt.sign(rows[0], app.get('superSecret'), {
-					expiresIn: 1000  // expires in 24 hours
+					expiresIn: 100000000  // expires in 24 hours
 
 				});
 

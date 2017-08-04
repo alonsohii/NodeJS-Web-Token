@@ -19,12 +19,12 @@ exports.Verificar = function(req, res, next) {
 			if (err) {
 				return res.json({ success: false, message: 'Failed to authenticate token.' });		
 			} else {
-				 // console.log(Globalonline);
+				  console.log(Globalonline);
 
-                // if(Globalonline.indexOf(userdata.id) >= 0 ){
+                if(Globalonline.indexOf(userdata.id) == -1 ){
                  	//console.log(userdata.id);
-                 	 Globalonline.push(userdata.id);
-              //   }
+                 	// Globalonline.push(userdata.id);
+                }
 				
 			        console.log(Globalonline);
 				req.decoded = decoded;

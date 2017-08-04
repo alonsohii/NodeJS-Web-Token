@@ -16,8 +16,8 @@ var express 	= require('express'),
     passport = require('passport'),
     config = require('./oauth.js'),
     Strategy = require('passport-facebook').Strategy,
+    cookie = require('cookie'),
     socketIOHelper = require('./app/helpers/socketio');
-
    // TwitterStrategy = require('passport-twitter').Strategy,
    // GithubStrategy = require('passport-github2').Strategy,
    // GoogleStrategy = require('passport-google-oauth2').Strategy,
@@ -28,18 +28,22 @@ var express 	= require('express'),
       origin: 'http://freelanceworks.com.pc:8080'
     }
 
-
+app.use(cookieParser('dsasdas'));
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var idactual;
+//var idactual = null;
 global.globalIo = io;
+app.locals.idactual = null;
 
 
-
-
+mongoose.connect('mongodb://localhost/test', {
+  useMongoClient: true,
+  /* other options */
+});
 //var online = {};
-global.Globalonline = [];
+var Globalonline = [];
+global.Globalonline = Globalonline;
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/public/index.html');
@@ -50,11 +54,15 @@ app.get('/', function (req, res) {
 var usernames = {};
 var rooms = [];
 
-//io.sockets.on('connection', Helper.Emitir );
+
+//io.use(ios(session));
 
 io.sockets.on('connection', function (socket) {
-  // socket.join('masterroom');
-   console.log('conectado');
+   //socket.join('masterroom');
+   console.log('Socket IO conectado');
+
+
+  // console.log(socket);
 
     socket.on('adduser', function (data) {
         var username = data.username;
@@ -81,7 +89,7 @@ io.sockets.on('connection', function (socket) {
         data.room = new_room;
        // socket.emit('updatechat', 'SERVER', 'Your room is ready, invite someone using this ID:' + new_room);
        // console.log(new_room);
-        console.log(data);
+       // console.log(data);
 
         socket.emit('roomcreated', data);
 
@@ -93,13 +101,16 @@ io.sockets.on('connection', function (socket) {
 
     });
 
-    socket.on('disconnect', function () {
+    socket.on('disconnect', function (m) {
         delete usernames[socket.username];
         console.log('desconectado');
-        if(idactual!= null){
-          var index = Globalonline.indexOf(idactual);
-            if (index > -1) {
-                Globalonline.splice(index, idactual);
+        console.log(socket.usuarios);
+        if(app.locals.idactual!= null){
+          var index = Globalonline.indexOf(app.locals.idactual);
+            if (index != -1) {
+              console.log('----------------------borrando'+app.locals.idactual);
+              delete Globalonline[socket.id];
+                 Globalonline.splice(index, app.locals.idactual);
             }
         }
         io.sockets.emit('updateusers', usernames);
@@ -109,6 +120,161 @@ io.sockets.on('connection', function (socket) {
         }
     });
 });
+
+var i18n = require('i18n');
+
+i18n.configure({
+
+    //define how many languages we would support in our application
+    locales:['en', 'zh'],
+
+    //define the path to language json files, default is /locales
+    directory: __dirname + '/locales',
+
+    //define the default language
+    defaultLocale: 'en',
+
+    // define a custom cookie name to parse locale settings from 
+    cookie: 'i18n'
+});
+
+    app.use(cookieParser("demomulti"));
+
+app.use(session({
+    secret: "demomulti",
+    resave: true,
+    saveUninitialized: true,
+    cookie: { maxAge: 60000 }
+}));
+
+
+app.use(i18n.init);
+
+
+// mn
+// =================================================================
+// configuration ===================================================
+// =================================================================
+var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
+//mongoose.connect(config.database); // connect to database
+app.set('superSecret', config.secret); // secret variable
+
+// use body parser so we can get info from POST and/or URL parameters
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// use morgan to log requests to the console
+app.use(morgan('dev'));
+app.use(cors(corsOptions));
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
+// =================================================================
+// routes ==========================================================
+// =================================================================
+// Paginas
+
+app.post('/usuario', UsuariosCtrl.InsertarUsuario );
+app.post('/reset', UsuariosCtrl.RandomPassword );
+
+app.post('/InsertarProyecto',ProyectCtrl.InsertarProyecto);
+
+
+Helper.Pagina('/registro','registro',{ title: "Registro de Usuarios"} , app);
+Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
+Helper.Pagina('/demo','registro',{ title: "Diferente"},app);
+Helper.Pagina('/home','home',{ title: "Inicio"},app);
+
+
+
+Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
+Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
+
+Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
+Helper.Pagina('/search','search',{ title: "Buscar Proyecto"},app);
+Helper.Pagina('/usuarios','users',{ title: "Usuarios"},app);
+
+
+
+// Paginas Mongo
+
+app.get('/setup', UsuariosCtrl.UsuarioMongoDb);
+app.get('/paises', PaisesCtrl.CatalogoPaises );
+app.get('/visitante', PaisesCtrl.Visitante );
+
+app.get('/users', UsuariosCtrl.GetUsers);
+app.get('/online', UsuariosCtrl.GetUsersOnline);
+
+
+app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
+app.get('/Projects', ProyectCtrl.GetProjects );
+app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
+app.get('/Presupuestos', PaisesCtrl.Presupuestos );
+
+
+// ---------------------------------------------------------
+// get an instance of the router for api routes
+// ---------------------------------------------------------
+
+var apiRoutes = express.Router(); 
+
+// ---------------------------------------------------------
+// authentication (no middleware necessary since this isnt authenticated)
+// ---------------------------------------------------------
+// http://localhost:8080/api/authenticate
+apiRoutes.post('/authenticate', AutCtrl.autentificarMysql);
+
+// ---------------------------------------------------------
+// route middleware to authenticate and check token
+// ---------------------------------------------------------
+apiRoutes.use(Middleware.Verificar);
+
+// ---------------------------------------------------------
+// authenticated routes
+// ---------------------------------------------------------
+apiRoutes.get('/', function(req, res) {
+ //console.log(req.decoded.id) ;
+    app.locals.idactual = req.decoded.id;
+
+    //  console.log(socket.handshake);
+   if(app.locals.idactual != null){
+       var existe = Globalonline.indexOf(app.locals.idactual);
+       console.log(existe);
+       if(existe == -1){
+             Globalonline[Math.floor((Math.random() * 10000) + Math.random())] = app.locals.idactual;
+           console.log('insertando:'+app.locals.idactual+'. por que existe:'+existe);
+       }
+
+   }
+
+	res.json({ success:true, message: 'Welcome to the coolest API on earth!' , user:req.decoded.usuario, correo:req.decoded.correo});
+});
+
+apiRoutes.get('/users', function(req, res) {
+	User.find({}, function(err, users) {
+		res.json(users);
+	});
+});
+
+apiRoutes.get('/check', function(req, res) {
+	res.json(req.decoded);
+});
+
+app.use('/api', apiRoutes);
+// =================================================================
+// start the server ================================================
+// =================================================================
+server.listen(port);
+console.log('Magic happens at http://localhost:' + port);
+
+
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+});
+
+
+
+
+
 
 /** SOCKET IO **/
 
@@ -198,159 +364,11 @@ app.get('/profile',
 
  facebook login **/
 
-
-
-var i18n = require('i18n');
-
-i18n.configure({
-
-    //define how many languages we would support in our application
-    locales:['en', 'zh'],
-
-    //define the path to language json files, default is /locales
-    directory: __dirname + '/locales',
-
-    //define the default language
-    defaultLocale: 'en',
-
-    // define a custom cookie name to parse locale settings from 
-    cookie: 'i18n'
-});
-
-    app.use(cookieParser("demomulti"));
-
-app.use(session({
-    secret: "demomulti",
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 }
-}));
-
-
-
-
-
-
-app.use(i18n.init);
-
-
-// mn
-// =================================================================
-// configuration ===================================================
-// =================================================================
-var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
-//mongoose.connect(config.database); // connect to database
-app.set('superSecret', config.secret); // secret variable
-
-// use body parser so we can get info from POST and/or URL parameters
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// use morgan to log requests to the console
-app.use(morgan('dev'));
-app.use(cors(corsOptions));
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/public'));
-// =================================================================
-// routes ==========================================================
-// =================================================================
-// Paginas
-
-app.post('/usuario', UsuariosCtrl.InsertarUsuario );
-app.post('/reset', UsuariosCtrl.RandomPassword );
-
-app.post('/InsertarProyecto',ProyectCtrl.InsertarProyecto);
-
-
-Helper.Pagina('/registro','registro',{ title: "Registro de Usuarios"} , app);
-Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
-Helper.Pagina('/demo','registro',{ title: "Diferente"},app);
-Helper.Pagina('/home','home',{ title: "Inicio"},app);
-
-app.get('/webdemo', function(req, res, next) {
-   res.render('home', {query : req.query , title:'asdas'});
-});
-
-Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
-Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
-
-Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
-Helper.Pagina('/search','search',{ title: "Buscar Proyecto"},app);
-Helper.Pagina('/usuarios','users',{ title: "Usuarios"},app);
-
-
-
-
-
-//
-
-// Paginas Mongo
-
-app.get('/setup', UsuariosCtrl.UsuarioMongoDb);
-app.get('/paises', PaisesCtrl.CatalogoPaises );
-app.get('/visitante', PaisesCtrl.Visitante );
-
-app.get('/users', UsuariosCtrl.GetUsers);
-app.get('/online', UsuariosCtrl.GetUsersOnline);
-
-
-app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
-app.get('/Projects', ProyectCtrl.GetProjects );
-app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
-app.get('/Presupuestos', PaisesCtrl.Presupuestos );
-
-
-
-
-// ---------------------------------------------------------
-// get an instance of the router for api routes
-// ---------------------------------------------------------
-
-var apiRoutes = express.Router(); 
-
-// ---------------------------------------------------------
-// authentication (no middleware necessary since this isnt authenticated)
-// ---------------------------------------------------------
-// http://localhost:8080/api/authenticate
-apiRoutes.post('/authenticate', AutCtrl.autentificarMysql);
-
-
-
-// ---------------------------------------------------------
-// route middleware to authenticate and check token
-// ---------------------------------------------------------
-apiRoutes.use(Middleware.Verificar);
-
-// ---------------------------------------------------------
-// authenticated routes
-// ---------------------------------------------------------
-apiRoutes.get('/', function(req, res) {
- //console.log(req.decoded.id) ;
-    idactual = req.decoded.id;
-    console.log(idactual) ;
-	res.json({ success:true, message: 'Welcome to the coolest API on earth!' });
-});
-
-apiRoutes.get('/users', function(req, res) {
-	User.find({}, function(err, users) {
-		res.json(users);
-	});
-});
-
-apiRoutes.get('/check', function(req, res) {
-	res.json(req.decoded);
-});
-
-app.use('/api', apiRoutes);
-
-// =================================================================
-// start the server ================================================
-// =================================================================
-server.listen(port);
-console.log('Magic happens at http://localhost:' + port);
-
-
-process.on('uncaughtException', function (err) {
-  console.log('Caught exception: ' + err);
-});
-
+function findValue(o, value) {
+    for (var prop in o) {
+        if (o.hasOwnProperty(prop) && o[prop] === value) {
+            return prop;
+        }
+    }
+    return null;
+}

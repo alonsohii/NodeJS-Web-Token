@@ -1,16 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
   var socket ;
 
 
@@ -37,6 +24,13 @@
     debugger;
     socket.emit('adduser', data);
   });
+
+  socket.on('disconnect', function (data) {
+   
+   //alert('alv');
+  });
+
+  
 
 
   socket.on('emi', function (data) {

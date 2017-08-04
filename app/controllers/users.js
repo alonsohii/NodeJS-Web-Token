@@ -154,11 +154,32 @@ exports.UsuarioMongoDb = function(req,res){
     admin: true 
   });
   nick.save(function(err) {
-    if (err) res.status(400); res.send(err);  throw err;
+    if (err)  {
+     res.json({ success: false });  throw err;
 
-    console.log('User saved successfully');
+    }else{
+
+          console.log('User saved successfully');
     res.json({ success: true });
+
+    }
+
+
   });
+
+
+ /*   var nick = {  
+      name: 'chilo', 
+    password: '1234',
+    admin: true 
+  };*/
+  
+  //insert record
+//  console.log(  db.mongo);
+ /* db.mdb.collection('test').insert(nick, function(err, records) {
+    if (err) throw err;
+    console.log("Record added as "+records[0]._id);
+  });*/
 
 
 }

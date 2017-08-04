@@ -167,3 +167,15 @@ function conversor_divisa($moneda_origen,$moneda_destino,$cantidad) {
   return preg_replace("/[^0-9\.]/", null, $get[0]);
 }
 
+
+
+window.onbeforeunload = function(e){  
+
+
+      ///     $.get("http://freelanceworks.com.pc:8080/api/?token="+localStorage.getItem('tk')+'&close='1, function(data, status){
+              
+
+
+      //     });
+// return 'Calling some alert messages here'; //return not alert
+}
