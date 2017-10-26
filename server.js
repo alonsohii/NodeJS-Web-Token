@@ -25,7 +25,7 @@ var express 	= require('express'),
     ejs = require('ejs');
     const cors = require('cors');
     const corsOptions = {
-      origin: 'http://freelanceworks.com.pc:8080'
+      origin: 'http://localhost:8080'
     }
 
 app.use(cookieParser('dsasdas'));

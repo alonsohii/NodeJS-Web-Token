@@ -67,7 +67,7 @@ $(document).ready(function() {
                 
 
 <div class="login box blurred-bg tinted">
-  <h1>Crea un nuevo proyecto!</h1>
+  <h1>Crear</h1>
     <form>
 
           
@@ -81,13 +81,13 @@ $(document).ready(function() {
     
      <!-- <input type="text" name="u" placeholder="Username" required="required" /> -->
         <!-- <input type="password" name="p" placeholder="Password" required="required" />  -->
-        <button type="submit" class="btn btn-primary btn-block btn-large">Crear nuevo proyecto.</button>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Crear.</button>
     </form>
 </div>
 
 <script>
         $(function() {
-            $.when( $.get("http://freelanceworks.com.pc:8080/categorias", function(data, status){
+            $.when( $.get("http://localhost:8080/categorias", function(data, status){
                debugger;
                      
 
@@ -105,7 +105,7 @@ $(document).ready(function() {
         });
 
            $(document).on('change','#ComboCategorias',function(){
-               $.get("http://freelanceworks.com.pc:8080/subcategorias?cat="+$("#ComboCategorias").val(), function(data, status){
+               $.get("http://localhost:8080/subcategorias?cat="+$("#ComboCategorias").val(), function(data, status){
                    if(data.length>0){
                         $.each( data, function( key, value ) {
                            $( "#ComboSubCategorias" ).html("");

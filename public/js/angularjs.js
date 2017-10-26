@@ -14,9 +14,8 @@ var app = angular.module('app', [])
   /*for(var i=0; i<25; i++){
     $scope.items.push('Product ' + i);
   } */
-  $http.get("http://freelanceworks.com.pc:8080/projects")
+  $http.get("http://localhost:8080/projects")
     .then(function(response) {
-      debugger;
       $scope.items = response.data;
   }); 
   $scope.firstPage = function() {

@@ -52,7 +52,7 @@ var app = angular.module('app', [])
   /*for(var i=0; i<25; i++){
     $scope.items.push('Product ' + i);
   } */
-  $http.get("http://freelanceworks.com.pc:8080/users")
+  $http.get("http://localhost:8080/users")
     .then(function(response) {
       debugger;
       $scope.items = response.data;
@@ -168,7 +168,7 @@ function chat(x){
 }
 
 
-$.get( "http://freelanceworks.com.pc:8080/users", function( data ) {
+$.get( "http://localhost:8080/users", function( data ) {
 
         $.each( data, function( key, value ) {
 

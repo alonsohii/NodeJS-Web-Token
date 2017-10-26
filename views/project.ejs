@@ -194,7 +194,7 @@ $.getJSON("http://api.fixer.io/latest", demo);
 
 
 <div class=" box blurred-bg tinted">
-  <h1 class="shining">Crea un nuevo proyecto!</h1>
+  <h1 class="shining">Crear</h1>
 
 
 <div class="row" id="botones">
@@ -274,12 +274,12 @@ $.getJSON("http://api.fixer.io/latest", demo);
             </select>
 
            <div class="row">
-            <div class="col-md-8"><label style="color: white;">  Nombre del proyecto:</label>
+            <div class="col-md-8"><label style="color: white;">  Nombre:</label>
             <input nv='Nombre del proyecto' type="text" id="nombreproyecto" name="nombreproyecto" placeholder="Nombre de su proyecto" required="required" /> </div>
            </div>
 
             <div class="row">
-              <div class="col-md-8"><label style="color: white;"> Describe tu proyecto:</label>
+              <div class="col-md-8"><label style="color: white;"> Describe:</label>
               <textarea nv='Descripcion del proyecto' type="text" id="descripcionproyecto" name="descripcionproyecto" placeholder="Describe de que se trata tu proyecto aqui" required="required" > </textarea> </div>
            </div>
 
@@ -311,7 +311,7 @@ $.getJSON("http://api.fixer.io/latest", demo);
         $(function() {
 
 
-          $.get("http://freelanceworks.com.pc:8080/Presupuestos", function(data, status){
+          $.get("http://localhost:8080/Presupuestos", function(data, status){
               
 
                      $.each( data, function( key, value ) {
@@ -327,7 +327,7 @@ $.getJSON("http://api.fixer.io/latest", demo);
               });
 
 
-            $.when( $.get("http://freelanceworks.com.pc:8080/categorias", function(data, status){
+            $.when( $.get("http://localhost:8080/categorias", function(data, status){
 
                      $.each( data, function( key, value ) {
                       $( "#ComboCategorias" ).append( " <option value='"+value.id+"'>" + value.categoria +"</option>" );
@@ -343,7 +343,7 @@ $.getJSON("http://api.fixer.io/latest", demo);
         });
 
            $(document).on('change','#ComboCategorias',function(){
-               $.get("http://freelanceworks.com.pc:8080/subcategorias?cat="+$("#ComboCategorias").val(), function(data, status){
+               $.get("http://localhost:8080/subcategorias?cat="+$("#ComboCategorias").val(), function(data, status){
                    if(data.length>0){
                         $.each( data, function( key, value ) {
                            $( "#ComboSubCategorias" ).html("");
@@ -369,7 +369,7 @@ $.getJSON("http://api.fixer.io/latest", demo);
 
            
 
-           $.get("http://freelanceworks.com.pc:8080/api/?token="+localStorage.getItem('tk'), function(data, status){
+           $.get("http://localhost:8080/api/?token="+localStorage.getItem('tk'), function(data, status){
               
               if(data.success){
                 loge = 1;

@@ -20,6 +20,8 @@ exports.autentificar = function(req, res) {
 
 
 		};
+
+
 		if (!user) {
 			res.json({ success: false, message: 'Authentication failed. User not found.' });
 		} else if (user) {
@@ -52,9 +54,9 @@ exports.autentificar = function(req, res) {
 
 exports.autentificarMysql = function(req,res){
 
-
+		
  db.query('SELECT correo, pw    , idbp_personas  as id , username as usuario FROM bp_personas     WHERE correo = "' + req.body.name + '"'  /* + 'AND password =' [hash] */ , function(err, rows, fields) {
-
+console.log(rows.length);
 if(rows != undefined &&   rows.length>0){
 	  
 

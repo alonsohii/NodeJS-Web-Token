@@ -56,7 +56,7 @@
             
             $scope.loadPage = function() {
                 // You could use Restangular here with a route resource.
-                $http.get('http://freelanceworks.com.pc:8080/projects').success(function(data){
+                $http.get('http://localhost:8080/projects').success(function(data){
                     // users from your api
 
                     $scope.main.users = data;
