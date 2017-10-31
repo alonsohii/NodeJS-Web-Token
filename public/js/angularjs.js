@@ -16,7 +16,11 @@ var app = angular.module('app', [])
   } */
   $http.get("http://localhost:8080/projects")
     .then(function(response) {
-      $scope.items = response.data;
+      debugger;
+      if(response.data.success == null){
+         $scope.items = response.data;
+      }
+     
   }); 
   $scope.firstPage = function() {
     return $scope.currentPage == 0;

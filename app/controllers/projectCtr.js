@@ -72,6 +72,7 @@ exports.GetProjects = function(req,res){
          res.setHeader('Content-Type', 'application/json');
          res.json(data);
        }else{
+       	 //   data  = { ok:1};
            res.json({ success: false });     res.status(400);
        }
   },"SELECT * from V_PROYECTOS",db);
