@@ -148,7 +148,7 @@ $(document).ready(function() {
 
 <div ng-app="app" ng-controller="paginationCtrl">
 
-  <input type="text" placeholder="Find the friend" ng-model="searchText">
+  <input type="text" placeholder="Buscar" ng-model="searchText">
   <div id="content">
    
   <div  ng-repeat="item in items | startFrom: startingItem() | limitTo: itemsPerPage | filter:searchText">

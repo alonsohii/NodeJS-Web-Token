@@ -47,7 +47,7 @@ exports.InsertarProyecto = function(req,res){
 
 	          	socketIOHelper.set(io);
 				var receivers = require('../../app/sockets/receivers.server.sockets');
-				receivers.receivers(io);
+				receivers.receivers(io,"registrado");
 
 	          res.json({ success: true });     
 	          return 1;
@@ -62,9 +62,6 @@ exports.InsertarProyecto = function(req,res){
 
 // Obtener Proyectos
 exports.GetProjects = function(req,res){
-
-
-
 
     Helper.Query(function(data){     
        if(data!='nodata'){

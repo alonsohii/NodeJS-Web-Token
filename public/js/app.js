@@ -33,10 +33,10 @@
   
 
 
-  socket.on('emi', function (data) {
+  socket.on('registrado', function (data) {
 
-   //console.log('alv');
-   alert('alv');
+   console.log('Registrado Alerta');
+   alert('Una persona ha registrado un proyecto');
   });
 
 

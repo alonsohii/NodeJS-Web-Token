@@ -1,9 +1,9 @@
 
 var socketIO;
-exports.receivers = (io) => {
+exports.receivers = (io,emi) => {
 	console.log('modulo');
 	socketIO = io;
-	globalIo.emit('emi','hola');
+	globalIo.emit(emi,'hola');
 	//io.broadcast.emit('emi', "this is a test");
 
 //console.log(io.sockets);
