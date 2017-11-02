@@ -28,6 +28,8 @@ var express 	= require('express'),
       origin: 'http://localhost:8080'
     }
 
+var users = {};
+
 app.use(cookieParser('dsasdas'));
 
 var server = require('http').Server(app);
@@ -172,45 +174,17 @@ app.use(express.static(__dirname + '/public'));
 // routes ==========================================================
 // =================================================================
 // Paginas
-
-app.post('/usuario', UsuariosCtrl.InsertarUsuario );
-app.post('/reset', UsuariosCtrl.RandomPassword );
-
-app.post('/InsertarProyecto',ProyectCtrl.InsertarProyecto);
+//var Modulos = require('./app/modules/pages.js');
 
 
-Helper.Pagina('/registro','registro',{ title: "Registro de Usuarios"} , app);
-Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
-Helper.Pagina('/demo','registro',{ title: "Diferente"},app);
-Helper.Pagina('/home','home',{ title: "Inicio"},app);
+//someModule = new Modulos();
+
+//someModule.Pages({UsuariosCtrl:UsuariosCtrl ,ProyectCtrl:ProyectCtrl ,PaisesCtrl:PaisesCtrl});
+var Modulo = require('./app/modules/pages.js')({UsuariosCtrl:UsuariosCtrl ,ProyectCtrl:ProyectCtrl ,PaisesCtrl:PaisesCtrl, app:app, Helper:Helper});
 
 
-
-Helper.Pagina('/generar','generar',{ title: "Reset Password"},app);
-Helper.Pagina('/newproject','newproject',{ title: "Nuevo Proyecto"},app);
-
-Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
-Helper.Pagina('/search','search',{ title: "Buscar Proyecto"},app);
-Helper.Pagina('/usuarios','users',{ title: "Usuarios"},app);
-
-
-
-// Paginas Mongo
-
-app.get('/setup', UsuariosCtrl.UsuarioMongoDb);
-app.get('/paises', PaisesCtrl.CatalogoPaises );
-app.get('/visitante', PaisesCtrl.Visitante );
-
-app.get('/users', UsuariosCtrl.GetUsers);
-app.get('/online', UsuariosCtrl.GetUsersOnline);
-
-
-app.get('/Categorias', PaisesCtrl.CategoriasProyecto );
-app.get('/Projects', ProyectCtrl.GetProjects );
-app.get('/SubCategorias', PaisesCtrl.SubCategoriasProyecto );
-app.get('/Presupuestos', PaisesCtrl.Presupuestos );
-
-
+ // Modulo = new Modulo();
+//console.log(Modulo.greet());
 // ---------------------------------------------------------
 // get an instance of the router for api routes
 // ---------------------------------------------------------

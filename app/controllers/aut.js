@@ -78,7 +78,7 @@ if(rows != undefined &&   rows.length>0){
 				// if user is found and password is right
 				// create a token
 				var token = jwt.sign(rows[0], app.get('superSecret'), {
-					expiresIn: 100000000  // expires in 24 hours
+					expiresIn: 30000   // expires in 24 hours
 
 				});
 
