@@ -1,191 +1,158 @@
 <html>
+
 <head>
-  <title> <%= title %></title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
-  <script type="text/javascript" src="http://alasql.org/codex/lib/alasql/alasql.min.js"></script>
-  <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <script type="text/javascript" src="http://alasql.org/codex/lib/alasql/alasql.min.js"></script>
+    <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 
-   <script type="text/javascript" src=" ../js/adicional.js"></script>
-  
+    <script type="text/javascript" src=" ../js/adicional.js"></script>
 
- <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js'></script> 
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js'></script>
 
-
-
-<!--[if IE]>
+    <!--[if IE]>
 <script type="text/javascript " src="../js/angular.min.js "></script>
 <![endif]-->
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> 
-   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" href="../css/adicional.css">
-  <link rel="stylesheet" href="../css/search.css">
-<script src="/socket.io/socket.io.js "></script>
+    <link rel="stylesheet" href="../css/adicional.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <script src="/socket.io/socket.io.js "></script>
 
-<script type="text/javascript" src="../js/app.js "></script>
+    <script type="text/javascript" src="../js/app.js "></script>
 
-  <style type="text/css">
-    body{
- /* background:linear-gradient(#014576,#0B7AA7,#4CB1A3,#B1DB91)no-repeat;
+    <style type="text/css">
+        body {
+            /* background:linear-gradient(#014576,#0B7AA7,#4CB1A3,#B1DB91)no-repeat;
   background-size:cover;
   overflow-x: hidden;*/
-}
-  </style>
-<script>
-
-var app = angular.module('app', [])
-.filter('startFrom', function(){
-  return function(input, start){
-    start = +start;
-    return input.slice(start);
-  }
-})
-.controller('paginationCtrl', function($scope,$http){
-  $scope.currentPage = 0;
-  $scope.itemsPerPage = 1005;
-  $scope.items = [];
-  /*for(var i=0; i<25; i++){
-    $scope.items.push('Product ' + i);
-  } */
-  $http.get("http://localhost:8080/users")
-    .then(function(response) {
-      debugger;
-      $scope.items = response.data;
-  }); 
-  $scope.firstPage = function() {
-    return $scope.currentPage == 0;
-  }
-  $scope.lastPage = function() {
-    var lastPageNum = Math.ceil($scope.items.length / $scope.itemsPerPage - 1);
-    return $scope.currentPage == lastPageNum;
-  }
-  $scope.numberOfPages = function(){
-    return Math.ceil($scope.items.length / $scope.itemsPerPage);
-  }
-  $scope.startingItem = function() {
-    return $scope.currentPage * $scope.itemsPerPage;
-  }
-  $scope.pageBack = function() {
-    $scope.currentPage = $scope.currentPage - 1;
-  }
-  $scope.pageForward = function() {
-    $scope.currentPage = $scope.currentPage + 1;
-  }
-});
-
-
-
-
-
-
-$(document).ready(function() {
-    $("#Notificacion").hide();
-    $("#Correcto").hide();
-       $("#login").click(function(){//debugger;
-          $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
-            .done(function(data) {
-
-             if(data.success){
-
-                 localStorage.setItem('tk', data.token);
-                 window.location="/home";
-
-             }else
-             {
-               $("#Notificacion").hide(350);
-               $("#Notificacion").show(350);
-               $("#textnot").text("Error:Su correo o usuario no son correctos.");
-             }
-
+        }
+    </style>
+    <script>
+        var app = angular.module('app', [])
+            .filter('startFrom', function() {
+                return function(input, start) {
+                    start = +start;
+                    return input.slice(start);
+                }
             })
-            .fail(function() {
-           
-            })
+            .controller('paginationCtrl', function($scope, $http) {
+                $scope.currentPage = 0;
+                $scope.itemsPerPage = 1005;
+                $scope.items = [];
+                /*for(var i=0; i<25; i++){
+                  $scope.items.push('Product ' + i);
+                } */
+                $http.get("http://localhost:8080/users")
+                    .then(function(response) {
+                        debugger;
+                        $scope.items = response.data;
+                    });
+                $scope.firstPage = function() {
+                    return $scope.currentPage == 0;
+                }
+                $scope.lastPage = function() {
+                    var lastPageNum = Math.ceil($scope.items.length / $scope.itemsPerPage - 1);
+                    return $scope.currentPage == lastPageNum;
+                }
+                $scope.numberOfPages = function() {
+                    return Math.ceil($scope.items.length / $scope.itemsPerPage);
+                }
+                $scope.startingItem = function() {
+                    return $scope.currentPage * $scope.itemsPerPage;
+                }
+                $scope.pageBack = function() {
+                    $scope.currentPage = $scope.currentPage - 1;
+                }
+                $scope.pageForward = function() {
+                    $scope.currentPage = $scope.currentPage + 1;
+                }
+            });
 
+        $(document).ready(function() {
+            $("#Notificacion").hide();
+            $("#Correcto").hide();
+            $("#login").click(function() { //debugger;
+                $.post("http://localhost:8080/api/authenticate", {
+                        name: $('#email').val(),
+                        password: $('#pw').val()
+                    })
+                    .done(function(data) {
+
+                        if (data.success) {
+
+                            localStorage.setItem('tk', data.token);
+                            window.location = "/home";
+
+                        } else {
+                            $("#Notificacion").hide(350);
+                            $("#Notificacion").show(350);
+                            $("#textnot").text("Error:Su correo o usuario no son correctos.");
+                        }
+
+                    })
+                    .fail(function() {
+
+                    })
+
+            });
 
         });
-
-});
-
-
-
-</script>
+    </script>
 
 </head>
+
 <body>
-<%- include('header'); %>
-<div class="container ">
-  <div class="row">
-<div class="col-xs-12" id="demoContainer">
-  <div class="alert alert-success" id="Correcto">
-    <strong>Bien!</strong> Registro Hecho exitosamente.
-  </div>
-<div class="alert alert-danger" id="Notificacion" >
- <p id="textnot" ></p>
-</div>
-            
+    <%- include('header'); %>
+        <div class="container ">
+            <div class="row">
+                <div class="col-xs-12" id="demoContainer">
+                    <div class="alert alert-success" id="Correcto">
+                        <strong>Bien!</strong> Registro Hecho exitosamente.
+                    </div>
+                    <div class="alert alert-danger" id="Notificacion">
+                        <p id="textnot"></p>
+                    </div>
 
+                    <p id="chat" style=" overflow-y: scroll; width: 500px; height: 300px;"></p>
+                    <input type="text" id="texteandro" name="">
+                    <button onclick="mensaje($('#texteandro').val())" id="botonx">Enviar mensaje</button>
+                    <br>
 
+                    <p id="jk"></p>
 
- <p id="chat"  style=" overflow-y: scroll; width: 500px; height: 300px;" ></p>
-<input type="text"  id="texteandro"  name="">
-<button   onclick="mensaje($('#texteandro').val())" id="botonx">Enviar mensaje</button><br>
+                    <script>
+                        function chat(x) {
+                            var actual = 4;
+                            //debugger;
+                            if (actual > x) {
+                                var canal = (actual + '' + x).toString();
+                            } else {
+                                var canal = (x + '' + actual).toString();
+                            }
 
- <p id="jk"></p>
+                            crearSala({
+                                username: 'mario',
+                                newroom: canal
+                            });
+                        }
 
+                        $.get("http://localhost:8080/users", function(data) {
 
+                            $.each(data, function(key, value) {
 
+                                $("#jk").append(value.username + ' - ' + value.idbp_personas + ' <button   onclick="chat(' + value.idbp_personas + ')" id="botonx">Chatear</button><br>');
+                            });
+                        });
+                    </script>
 
-
-
-
-
-
-
-
-<script>
-
-
-
-
-
-function chat(x){
-  var actual = 4;
-  //debugger;
-  if(actual>x){
-    var canal =  (actual+''+x).toString();
-  }else{
-    var canal =  (x+''+actual).toString();
-  }
-
-
-  crearSala({username: 'mario', newroom:canal});
-}
-
-
-$.get( "http://localhost:8080/users", function( data ) {
-
-        $.each( data, function( key, value ) {
-
-          $( "#jk" ).append( value.username  +' - ' + value.idbp_personas + ' <button   onclick="chat('+value.idbp_personas+')" id="botonx">Chatear</button><br>' );
-       });
-});
-
-
-
-
-
-</script>
-
-  </div>
+                </div>
 </body>
+
 </html>
-
-
-
-

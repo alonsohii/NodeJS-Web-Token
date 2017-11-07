@@ -21,7 +21,7 @@ db.query(query, function(err, rows, fields) {
   rowss ='p';
 
   }else {
-  	console.log('mal');
+  	console.log('error');
   	rowss =  -1;
    // res.status(400);  res.send(err);  throw err;
   }

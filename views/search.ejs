@@ -1,194 +1,161 @@
 <html>
+
 <head>
-  <title> <%= title %></title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
-  <script type="text/javascript" src="http://alasql.org/codex/lib/alasql/alasql.min.js"></script>
-  <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
+    <title>
+        <%= title %>
+    </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <script type="text/javascript" src="http://alasql.org/codex/lib/alasql/alasql.min.js"></script>
+    <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 
-   <script type="text/javascript" src=" ../js/adicional.js"></script>
-  
+    <script type="text/javascript" src=" ../js/adicional.js"></script>
 
- <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js'></script> 
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js'></script>
 
-
-
-<!--[if IE]>
+    <!--[if IE]>
 <script type="text/javascript " src="../js/angular.min.js "></script>
 <![endif]-->
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"> 
-   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 
-  <link rel="stylesheet" href="../css/adicional.css">
-  <link rel="stylesheet" href="../css/search.css">
-<script src="/socket.io/socket.io.js "></script>
-<script type="text/javascript" src="../js/app.js "></script>
-<script type="text/javascript" src="../js/angularjs.js "></script>
+    <link rel="stylesheet" href="../css/adicional.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <script src="/socket.io/socket.io.js "></script>
+    <script type="text/javascript" src="../js/app.js "></script>
+    <script type="text/javascript" src="../js/angularjs.js "></script>
 
-  <style type="text/css">
-    body{
- /* background:linear-gradient(#014576,#0B7AA7,#4CB1A3,#B1DB91)no-repeat;
+    <style type="text/css">
+        body {
+            /* background:linear-gradient(#014576,#0B7AA7,#4CB1A3,#B1DB91)no-repeat;
   background-size:cover;
   overflow-x: hidden;*/
-}
-  </style>
-<script>
+        }
+    </style>
+    <script>
+        /*
 
+        (function() {
 
+            angular.module('app')
 
+                .controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
+                    $scope.main = {
+                        page: 1,
+                        take: 15
+                    };
 
-/*
+                    $scope.loadPage = function() {
+                        // You could use Restangular here with a route resource.
+                        $http.get('http://localhost:8080/projects').success(function(data){
+                            // users from your api
 
-(function() {
-  
-    
-    angular.module('app')
-    
-        .controller('MainCtrl', ['$scope', '$http', function($scope, $http) {
-            $scope.main = {
-                page: 1,
-                take: 15
-            };
-            
-            $scope.loadPage = function() {
-                // You could use Restangular here with a route resource.
-                $http.get('http://localhost:8080/projects').success(function(data){
-                    // users from your api
+                            $scope.main.users = data;
 
-                    $scope.main.users = data;
-                    
-                    // number of pages of users
-                    $socpe.main.pages = 10;
-                });
-            };
-            
-            $scope.nextPage = function() {
-                if ($scope.main.page < $scope.main.pages) {
-                    $scope.main.page++;
-                    $scope.loadPage();
-                }
-            };
-            
-            $scope.previousPage = function() {
-                if ($scope.main.page > 1) {
-                    $scope.main.page--;
-                    $scope.loadPage();
-                }
-            };
-        }]);
+                            // number of pages of users
+                            $socpe.main.pages = 10;
+                        });
+                    };
 
-});*/
-</script>
-<script>
+                    $scope.nextPage = function() {
+                        if ($scope.main.page < $scope.main.pages) {
+                            $scope.main.page++;
+                            $scope.loadPage();
+                        }
+                    };
 
-$(document).ready(function() {
-    $("#Notificacion").hide();
-    $("#Correcto").hide();
-       $("#login").click(function(){//debugger;
-          $.post( "http://localhost:8080/api/authenticate", { name: $('#email').val() , password: $('#pw').val() })
-            .done(function(data) {
+                    $scope.previousPage = function() {
+                        if ($scope.main.page > 1) {
+                            $scope.main.page--;
+                            $scope.loadPage();
+                        }
+                    };
+                }]);
 
-             if(data.success){
+        });*/
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#Notificacion").hide();
+            $("#Correcto").hide();
+            $("#login").click(function() { //debugger;
+                $.post("http://localhost:8080/api/authenticate", {
+                        name: $('#email').val(),
+                        password: $('#pw').val()
+                    })
+                    .done(function(data) {
 
-                 localStorage.setItem('tk', data.token);
-                 window.location="/home";
+                        if (data.success) {
 
-             }else
-             {
-               $("#Notificacion").hide(350);
-               $("#Notificacion").show(350);
-               $("#textnot").text("Error:Su correo o usuario no son correctos.");
-             }
+                            localStorage.setItem('tk', data.token);
+                            window.location = "/home";
 
-            })
-            .fail(function() {
-           
-            })
+                        } else {
+                            $("#Notificacion").hide(350);
+                            $("#Notificacion").show(350);
+                            $("#textnot").text("Error:Su correo o usuario no son correctos.");
+                        }
 
+                    })
+                    .fail(function() {
+
+                    })
+
+            });
 
         });
-
-});
-</script>
+    </script>
 
 </head>
+
 <body>
-<%- include('header'); %>
-<div class="container ">
-  <div class="row">
-<div class="col-xs-12" id="demoContainer">
-  <div class="alert alert-success" id="Correcto">
-    <strong>Bien!</strong> Registro Hecho exitosamente.
-  </div>
-<div class="alert alert-danger" id="Notificacion" >
- <p id="textnot" ></p>
-</div>
-            
+    <%- include('header'); %>
+        <div class="container ">
+            <div class="row">
+                <div class="col-xs-12" id="demoContainer">
+                    <div class="alert alert-success" id="Correcto">
+                        <strong>Bien!</strong> Registro Hecho exitosamente.
+                    </div>
+                    <div class="alert alert-danger" id="Notificacion">
+                        <p id="textnot"></p>
+                    </div>
 
+                    <p id="chat"></p>
 
+                    <div ng-app="app" ng-controller="paginationCtrl">
 
+                        <input type="text" placeholder="Buscar" ng-model="searchText">
+                        <div id="content">
 
+                            <div ng-repeat="item in items | startFrom: startingItem() | limitTo: itemsPerPage | filter:searchText">
 
- <p id="chat"></p>
+                                <div class="subscribe">
+                                    <!--  Image:: Email Logo  -->
 
+                                    <!--  Title Card subscribe  -->
+                                    <h2></h2>
+                                    <!--  Description -->
+                                    <p> {{ item.nombre }} </p>
 
+                                    {{ item.desarrollo }}
+                                    <br>
+                                    <button id="botonx">Postularme</button>
 
+                                </div>
 
+                            </div>
 
+                            <div id="pagination" class="row">
+                                <button class="pull-left btn btn-primary btn-sm" ng-disabled="firstPage()" ng-click="pageBack()">Atras</button>
+                                <span>{{currentPage+1}} de {{numberOfPages()}}</span>
+                                <button class="pull-right  btn btn-primary btn-sm" ng-disabled="lastPage()" ng-click="pageForward()">Siguiente</button>
+                            </div>
+                        </div>
+                    </div>
 
-
-
-
-
-
-
-<div ng-app="app" ng-controller="paginationCtrl">
-
-  <input type="text" placeholder="Buscar" ng-model="searchText">
-  <div id="content">
-   
-  <div  ng-repeat="item in items | startFrom: startingItem() | limitTo: itemsPerPage | filter:searchText">
-
-
-<div class="subscribe">
-<!--  Image:: Email Logo  -->
-
-
-<!--  Title Card subscribe  -->
-  <h2></h2>
-<!--  Description -->
-  <p>   {{ item.nombre }} </p>
-
-  {{ item.desarrollo }}
-  <br>
-  <button id="botonx">Postularme</button>
-
-  </div>
-
-
-
-    </div>
- 
-    <div id="pagination" class="row">
-      <button class="pull-left btn btn-primary btn-sm" ng-disabled="firstPage()" ng-click="pageBack()">Atras</button>
-      <span>{{currentPage+1}} de {{numberOfPages()}}</span>
-      <button class="pull-right  btn btn-primary btn-sm" ng-disabled="lastPage()" ng-click="pageForward()">Siguiente</button>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-  </div>
+                </div>
 </body>
+
 </html>
-
-
-
-
