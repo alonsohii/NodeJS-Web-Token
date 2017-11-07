@@ -1,16 +1,16 @@
-var express 	= require('express'),
-    app         = express(),
-    bodyParser  = require('body-parser'),
-    morgan      = require('morgan'),
-    mongoose    = require('mongoose'),
+var express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    mongoose = require('mongoose'),
     config = require('./config'), // get our config file
-    path    = require("path"),
+    path = require("path"),
     AutCtrl = require('./app/controllers/aut'),
     UsuariosCtrl = require('./app/controllers/users'),
     PaisesCtrl = require('./app/controllers/catpaises'),
     ProyectCtrl = require('./app/controllers/projectCtr'),
     Middleware = require('./app/middleware'),
-    Helper   = require('./app/helpers/general'),
+    Helper = require('./app/helpers/general'),
     session = require('express-session'),
     cookieParser = require('cookie-parser'),
     passport = require('passport'),
@@ -18,15 +18,15 @@ var express 	= require('express'),
     Strategy = require('passport-facebook').Strategy,
     cookie = require('cookie'),
     socketIOHelper = require('./app/helpers/socketio');
-   // TwitterStrategy = require('passport-twitter').Strategy,
-   // GithubStrategy = require('passport-github2').Strategy,
-   // GoogleStrategy = require('passport-google-oauth2').Strategy,
-   // InstagramStrategy = require('passport-instagram').Strategy,
-    ejs = require('ejs');
-    const cors = require('cors');
-    const corsOptions = {
-      origin: 'http://localhost:8080'
-    }
+// TwitterStrategy = require('passport-twitter').Strategy,
+// GithubStrategy = require('passport-github2').Strategy,
+// GoogleStrategy = require('passport-google-oauth2').Strategy,
+// InstagramStrategy = require('passport-instagram').Strategy,
+ejs = require('ejs');
+const cors = require('cors');
+const corsOptions = {
+    origin: 'http://localhost:8080'
+}
 
 var users = {};
 
@@ -34,20 +34,18 @@ app.use(cookieParser('dsasdas'));
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-//var idactual = null;
+
 global.globalIo = io;
 app.locals.idactual = null;
 
-
 mongoose.connect('mongodb://localhost/test', {
-  useMongoClient: true,
-  /* other options */
+    useMongoClient: true
 });
 //var online = {};
 var Globalonline = [];
 global.Globalonline = Globalonline;
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     res.sendFile(__dirname + '/public/index.html');
 });
 
@@ -56,17 +54,15 @@ app.get('/', function (req, res) {
 var usernames = {};
 var rooms = [];
 
-
 //io.use(ios(session));
 
-io.sockets.on('connection', function (socket) {
-   //socket.join('masterroom');
-   console.log('Socket IO conectado');
+io.sockets.on('connection', function(socket) {
+    //socket.join('masterroom');
+    console.log('Socket IO conectado');
 
+    // console.log(socket);
 
-  // console.log(socket);
-
-    socket.on('adduser', function (data) {
+    socket.on('adduser', function(data) {
         var username = data.username;
         var room = data.room;
 
@@ -76,43 +72,42 @@ io.sockets.on('connection', function (socket) {
             usernames[username] = username;
             socket.join(room);
 
-
             socket.emit('updatechat', 'SERVER', 'You are connected. Start chatting');
             socket.broadcast.to(room).emit('updatechat', 'SERVER', username + ' has connected to this room');
         } else {
             socket.emit('updatechat', 'SERVER', 'Please enter valid code.');
         }
     });
-    
-    socket.on('createroom', function (data) {
-            
-        var new_room =   parseInt( data.newroom, 10);  //("" + Math.random()).substring(2, 7);parseInt(req.params.year, 10);
+
+    socket.on('createroom', function(data) {
+
+        var new_room = parseInt(data.newroom, 10); //("" + Math.random()).substring(2, 7);parseInt(req.params.year, 10);
         rooms.push(new_room);
         data.room = new_room;
-       // socket.emit('updatechat', 'SERVER', 'Your room is ready, invite someone using this ID:' + new_room);
-       // console.log(new_room);
-       // console.log(data);
+        // socket.emit('updatechat', 'SERVER', 'Your room is ready, invite someone using this ID:' + new_room);
+        // console.log(new_room);
+        // console.log(data);
 
         socket.emit('roomcreated', data);
 
     });
 
-    socket.on('sendchat', function (data) {
-               console.log(' mensaje data:'+data + ' - '+socket.room);
+    socket.on('sendchat', function(data) {
+        console.log(' mensaje data:' + data + ' - ' + socket.room);
         io.sockets.in(socket.room).emit('updatechat', socket.username, data);
 
     });
 
-    socket.on('disconnect', function (m) {
+    socket.on('disconnect', function(m) {
         delete usernames[socket.username];
         console.log('desconectado');
         console.log(socket.usuarios);
-        if(app.locals.idactual!= null){
-          var index = Globalonline.indexOf(app.locals.idactual);
+        if (app.locals.idactual != null) {
+            var index = Globalonline.indexOf(app.locals.idactual);
             if (index != -1) {
-              console.log('----------------------borrando'+app.locals.idactual);
-              delete Globalonline[socket.id];
-                 Globalonline.splice(index, app.locals.idactual);
+                console.log('----------------------borrando' + app.locals.idactual);
+                delete Globalonline[socket.id];
+                Globalonline.splice(index, app.locals.idactual);
             }
         }
         io.sockets.emit('updateusers', usernames);
@@ -128,7 +123,7 @@ var i18n = require('i18n');
 i18n.configure({
 
     //define how many languages we would support in our application
-    locales:['en', 'zh'],
+    locales: ['en', 'zh'],
 
     //define the path to language json files, default is /locales
     directory: __dirname + '/locales',
@@ -140,18 +135,18 @@ i18n.configure({
     cookie: 'i18n'
 });
 
-    app.use(cookieParser("demomulti"));
+app.use(cookieParser("demomulti"));
 
 app.use(session({
     secret: "demomulti",
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 60000 }
+    cookie: {
+        maxAge: 60000
+    }
 }));
 
-
 app.use(i18n.init);
-
 
 // mn
 // =================================================================
@@ -162,7 +157,9 @@ var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
 app.set('superSecret', config.secret); // secret variable
 
 // use body parser so we can get info from POST and/or URL parameters
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(bodyParser.json());
 
 // use morgan to log requests to the console
@@ -176,20 +173,34 @@ app.use(express.static(__dirname + '/public'));
 // Paginas
 //var Modulos = require('./app/modules/pages.js');
 
-
 //someModule = new Modulos();
 
 //someModule.Pages({UsuariosCtrl:UsuariosCtrl ,ProyectCtrl:ProyectCtrl ,PaisesCtrl:PaisesCtrl});
-var Modulo = require('./app/modules/pages.js')({UsuariosCtrl:UsuariosCtrl ,ProyectCtrl:ProyectCtrl ,PaisesCtrl:PaisesCtrl, app:app, Helper:Helper});
+var Modulo = require('./app/modules/pages.js')({
+    UsuariosCtrl: UsuariosCtrl,
+    ProyectCtrl: ProyectCtrl,
+    PaisesCtrl: PaisesCtrl,
+    app: app,
+    Helper: Helper
+});
+app.get('/project/:nombre', function(req, res) {
+   // res.send('Hola ' + req.params.nombre);
 
+    var param = {};
+    param = {
+        nombre: req.params.nombre
+    };
+    res.render('detalle', { nombre: req.params.nombre ,title:'Detalle proyecto' });
+    res.status(200);
+});
 
- // Modulo = new Modulo();
+// Modulo = new Modulo();
 //console.log(Modulo.greet());
 // ---------------------------------------------------------
 // get an instance of the router for api routes
 // ---------------------------------------------------------
 
-var apiRoutes = express.Router(); 
+var apiRoutes = express.Router();
 
 // ---------------------------------------------------------
 // authentication (no middleware necessary since this isnt authenticated)
@@ -206,31 +217,23 @@ apiRoutes.use(Middleware.Verificar);
 // authenticated routes
 // ---------------------------------------------------------
 apiRoutes.get('/', function(req, res) {
- //console.log(req.decoded.id) ;
-    app.locals.idactual = req.decoded.id;
-
-    //  console.log(socket.handshake);
-   if(app.locals.idactual != null){
-       var existe = Globalonline.indexOf(app.locals.idactual);
-       console.log(existe);
-       if(existe == -1){
-             Globalonline[Math.floor((Math.random() * 10000) + Math.random())] = app.locals.idactual;
-           console.log('insertando:'+app.locals.idactual+'. por que existe:'+existe);
-       }
-
-   }
-
-	res.json({ success:true, message: 'Welcome to the coolest API on earth!' , user:req.decoded.usuario, correo:req.decoded.correo});
+    //console.log(req.decoded.id) ;
+    res.json({
+        success: true,
+        message: 'Welcome to the coolest API on earth!',
+        user: req.decoded.usuario,
+        correo: req.decoded.correo
+    });
 });
 
 apiRoutes.get('/users', function(req, res) {
-	User.find({}, function(err, users) {
-		res.json(users);
-	});
+    User.find({}, function(err, users) {
+        res.json(users);
+    });
 });
 
 apiRoutes.get('/check', function(req, res) {
-	res.json(req.decoded);
+    res.json(req.decoded);
 });
 
 app.use('/api', apiRoutes);
@@ -240,15 +243,9 @@ app.use('/api', apiRoutes);
 server.listen(port);
 console.log('Magic happens at http://localhost:' + port);
 
-
-process.on('uncaughtException', function (err) {
-  console.log('Caught exception: ' + err);
+process.on('uncaughtException', function(err) {
+    console.log('Caught exception: ' + err);
 });
-
-
-
-
-
 
 /** SOCKET IO **/
 
@@ -274,7 +271,6 @@ passport.use(new Strategy({
     return cb(null, profile);
   }));
 
-
 // Configure Passport authenticated session persistence.
 //
 // In order to restore authentication state across HTTP requests, Passport needs
@@ -291,7 +287,6 @@ passport.serializeUser(function(user, cb) {
 passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
-
 
 // Create a new Express application.
 var app = express();
@@ -312,14 +307,11 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 // Define routes.
 app.get('/',
   function(req, res) {
     res.render('home', { user: req.user });
   });
-
-
 
 app.get('/login/facebook',
   passport.authenticate('facebook'));
