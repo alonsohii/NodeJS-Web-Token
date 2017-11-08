@@ -1,7 +1,7 @@
 
 
 module.exports = function(params,callback) {
-	
+
     this.UsuariosCtrl = params.UsuariosCtrl;
     this.ProyectCtrl = params.ProyectCtrl;
     this.PaisesCtrl = params.PaisesCtrl;
@@ -44,6 +44,17 @@ module.exports = function(params,callback) {
 	this.app.get('/Projects', this.ProyectCtrl.GetProjects );
 	this.app.get('/SubCategorias', this.PaisesCtrl.SubCategoriasProyecto );
 	this.app.get('/Presupuestos', this.PaisesCtrl.Presupuestos );
+
+	this.app.get('/project/:nombre', function(req, res) {
+
+	    var param = {};
+	    param = {
+	        nombre: req.params.nombre
+	    };
+	    res.render('detalle', { nombre: req.params.nombre ,title:'Detalle proyecto' });
+	    res.status(200);
+    });
+
 
 
 	this.greet = function(params,callback){

@@ -21,12 +21,7 @@ exports.Verificar = function(req, res, next) {
 			} else {
 				  console.log(Globalonline);
 
-                if(Globalonline.indexOf(userdata.id) == -1 ){
-                 	//console.log(userdata.id);
-                 	// Globalonline.push(userdata.id);
-                }
-				
-			        console.log(Globalonline);
+
 				req.decoded = decoded;
 
 				next();
