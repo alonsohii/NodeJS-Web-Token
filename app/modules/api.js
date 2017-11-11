@@ -1,5 +1,4 @@
-
-module.exports = function(params,callback) {
+module.exports = function(params, callback) {
 
     // ---------------------------------------------------------
     // get an instance of the router for api routes
