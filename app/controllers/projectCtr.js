@@ -18,8 +18,8 @@ exports.InsertarProyecto = function(req, res) {
     var proyecto = {
 
         //Nombre:data. , 
-        Tiulo: data.nombreproyecto,
-        //url:data. , 
+        Tiulo: data.nombreproyecto.replace(/[^a-z0-9 ]/gi,''),
+        url:data.nombreproyecto.replace(/[^a-z0-9 ]/gi,'').replace(/[ ]+/g, '-'), 
         //tags:data. , 
         //descripcion:datadescripcionproyecto. , 
         oferta: data.persupuestado,
@@ -75,5 +75,20 @@ exports.GetProjects = function(req, res) {
             res.status(400);
         }
     }, "SELECT * from V_PROYECTOS", db);
+
+}
+
+// Projecto especifico 
+exports.GetProject = function(req, callback, arg) {
+  //console.log("SELECT * from V_PROYECTOS nombre ="+arg)
+  console.log(arg);
+    Helper.Query(function(data) {
+        if (data != 'nodata') { 
+           callback(data);
+        } else {
+           callback(null);
+
+        }
+    }, "SELECT * from V_PROYECTOS where urlproyecto ='"+arg+"'", db);
 
 }

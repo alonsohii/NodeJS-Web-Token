@@ -1,3 +1,5 @@
+var server = 'htt://localhost/';
+
 function CamposJson(ids) {
     // '#firstName, #lastName,#phoneNumber,#address'
     var $items = $(ids)
@@ -21,16 +23,22 @@ function validarCampos2(ids) {
     var campoAct;
     var valAct;
     var nvAct;
+    var numChar = null;
 
     $items.each(function() {
 
         campoAct = $(this).context.__proto__.toString().toLowerCase();
         valAct = $(this).val();
         nvAct = $(this).attr('nv');
+        numChar = $(this).attr('nr');
+
+        
 
         if (campoAct.indexOf('input') != -1 || campoAct.indexOf('password') != -1) {
-            val += validar(valAct, nvAct);
-            valido = validar(valAct, nvAct);
+            if(numChar!=null){
+               val += validarNC(valAct, nvAct,numChar);
+               valido = validarNC(valAct, nvAct,numChar);
+            }
         }
 
         if (campoAct.indexOf('textarea') != -1) {
@@ -75,6 +83,23 @@ function validar(str, campo) {
 
         } else {
             return 'El campo "' + campo + '" debe ser menor a 40 caracteres o mayor a 1.<br>';
+        }
+    } else {
+        return 'El campo "' + campo + '" no debe estar vacio.<br>';
+    }
+
+}
+
+function validarNC(str, campo,nc) {
+    //debugger;
+    nc =  (nc== null?40:parseInt(nc));
+
+    if (str != null && str != '') {
+        if (str.length < nc && str.length > 1) {
+            return 'isvalid';
+
+        } else {
+            return 'El campo "' + campo + '" debe ser menor a '+nc+' caracteres o mayor a 1.<br>';
         }
     } else {
         return 'El campo "' + campo + '" no debe estar vacio.<br>';

@@ -6,14 +6,14 @@ express = require('express'),
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+
 exports.Query = function(db, query) {
     var rowss;
     db.query(query, function(err, rows, fields) {
-        //console.log
+
         if (!err) {
-            console.log(demo(rows));
-            // rowss =  demo(rows);
-            // demo(rows);
+           // console.log(demo(rows));
+
             rowss = 'p';
 
         } else {
@@ -26,9 +26,7 @@ exports.Query = function(db, query) {
     return rowss;
 }
 
-function demo(x) {
-    return x;
-}
+
 
 module.exports.Query = function(callback, sql, db) {
     db.query(sql, function(err, rows, fields) {
@@ -43,6 +41,17 @@ module.exports.Query = function(callback, sql, db) {
     });
 
 }
+
+
+
+
+module.exports.UrlReplace = function(str) {
+    // https://stackoverflow.com/questions/388996/regex-for-javascript-to-allow-only-alphanumeric
+         return  str.replace(/[^a-z0-9 ]/gi,'').replace(/[ ]+/g, '-');
+
+}
+
+
 
 module.exports.Error = function(res, error) {
     res.status(400);

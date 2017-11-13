@@ -8,6 +8,7 @@ var app = angular.module('app', [])
     .controller('paginationCtrl', function($scope, $http) {
         $scope.currentPage = 0;
         $scope.itemsPerPage = 1005;
+        $scope.openProyecto = openProyecto;
         $scope.items = [];
         /*for(var i=0; i<25; i++){
           $scope.items.push('Product ' + i);

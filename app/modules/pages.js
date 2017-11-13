@@ -16,6 +16,7 @@ module.exports = function(params,callback) {
 
 
 	this.Helper.Pagina('/registro','registro',{ title: "Registro de Usuarios"} , app);
+	this.Helper.Pagina('/','home',{ title: "Registro de Usuarios"} , app);
 	this.Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
 	this.Helper.Pagina('/demo','registro',{ title: "Diferente"},app);
 	this.Helper.Pagina('/home','home',{ title: "Inicio"},app);
@@ -48,12 +49,29 @@ module.exports = function(params,callback) {
 	this.app.get('/project/:nombre', function(req, res) {
 
 	    var param = {};
-	    param = {
-	        nombre: req.params.nombre
-	    };
-	    res.render('detalle', { nombre: req.params.nombre ,title:'Detalle proyecto' });
-	    res.status(200);
+
+       this.ProyectCtrl.GetProject(null,function(data){
+      // 	this.Helper.UrlReplace(req.params.nombre)
+
+		    if(data != null){
+			    res.render('detalle', data[0]);
+			    res.status(200);
+		    }else{
+		    	var data = { nombre:'(404) No existe un proyecto con este nombre'}
+		        res.render('detalle', data);
+		        res.status(200);
+		    }
+
+       },req.params.nombre);
+
+
+
     });
+
+    /*app.get('/', function(req, res) {
+    res.sendFile(__dirname + '/public/index.html');
+});*/
+
 
 
 

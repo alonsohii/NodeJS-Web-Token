@@ -106,6 +106,10 @@
             });
 
         });
+      function openProyecto(str){
+         location.href ='/project/'+str ;
+      }
+
     </script>
 
 </head>
@@ -141,7 +145,7 @@
 
                                     {{ item.desarrollo }}
                                     <br>
-                                    <button id="botonx">Postularme</button>
+                                    <button   ng-click="openProyecto(item.urlproyecto)" id="botonx">Postularme</button>
 
                                 </div>
 

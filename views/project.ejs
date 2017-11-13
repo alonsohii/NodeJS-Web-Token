@@ -21,9 +21,17 @@
     <script src="/socket.io/socket.io.js "></script>
     <script type="text/javascript " src="../js/app.js "></script>
 
+    <script src="../js/jquery.classyedit.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.classyedit.css" />
+
     <style type="text/css">
 
     </style>
+    <script>
+  $(document).ready(function() {
+     $(".classy-editor").ClassyEdit();
+   });
+</script> 
     <script>
         var loge;
 
@@ -274,13 +282,13 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <label style="color: white;"> Nombre:</label>
-                                    <input nv='Nombre del proyecto' type="text" id="nombreproyecto" name="nombreproyecto" placeholder="Nombre de su proyecto" required="required" /> </div>
+                                    <input nv='Nombre del proyecto' nr='250' type="text" id="nombreproyecto" name="nombreproyecto" placeholder="Nombre de su proyecto" required="required" /> </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-8">
                                     <label style="color: white;"> Describe:</label>
-                                    <textarea nv='Descripcion del proyecto' type="text" id="descripcionproyecto" name="descripcionproyecto" placeholder="Describe de que se trata tu proyecto aqui" required="required"> </textarea>
+                                    <textarea class="classy-editor" nv='Descripcion del proyecto' type="text" id="descripcionproyecto" name="descripcionproyecto" placeholder="Describe de que se trata tu proyecto aqui" required="required"> </textarea>
                                 </div>
                             </div>
 

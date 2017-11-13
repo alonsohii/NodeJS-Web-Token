@@ -45,9 +45,6 @@ mongoose.connect('mongodb://localhost/test', {
 var Globalonline = [];
 global.Globalonline = Globalonline;
 
-app.get('/', function(req, res) {
-    res.sendFile(__dirname + '/public/index.html');
-});
 
 /** SOCKET IO **/
 
