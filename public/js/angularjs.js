@@ -5,7 +5,7 @@ var app = angular.module('app', [])
             return input.slice(start);
         }
     })
-    .controller('paginationCtrl', function($scope, $http) {
+    .controller('paginationCtrl', function($scope, $http,$sce) {
         $scope.currentPage = 0;
         $scope.itemsPerPage = 1005;
         $scope.openProyecto = openProyecto;
@@ -19,6 +19,11 @@ var app = angular.module('app', [])
                 if (response.data != null) {
                     if (response.data.success == null) {
                         $scope.items = response.data;
+                        debugger;
+                        $scope.html = $scope.items[0].desarrollo;
+                        $scope.trustedHtml = $sce.trustAsHtml($scope.html);
+                        //$scope.thisCanBeusedInsideNgBindHtml = response.data;
+                        
                     }
 
                 }

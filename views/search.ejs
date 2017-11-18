@@ -142,8 +142,7 @@
                                     <h2></h2>
                                     <!--  Description -->
                                     <p> {{ item.nombre }} </p>
-
-                                    {{ item.desarrollo }}
+                                     <div ng-bind-html="trustedHtml"></div>
                                     <br>
                                     <button   ng-click="openProyecto(item.urlproyecto)" id="botonx">Postularme</button>
 
