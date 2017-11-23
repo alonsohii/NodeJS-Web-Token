@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = require('../models/user'); // get our mongoose model
+var ProyModel = require('../models/proyecto'); // get our mongoose model
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config = require('../../config'); // get our config file
 var express = require('express');
@@ -8,6 +9,7 @@ var app = express();
 app.set('superSecret', config.secret); // secret variable
 var crypto = require('crypto');
 socketIOHelper = require('../../app/helpers/socketio');
+var regex = /(<([^>]+)>)/ig;
 
 var express = require('express'),
     app = express();
@@ -18,8 +20,8 @@ exports.InsertarProyecto = function(req, res) {
     var proyecto = {
 
         //Nombre:data. , 
-        Tiulo: data.nombreproyecto.replace(/[^a-z0-9 ]/gi,''),
-        url:data.nombreproyecto.replace(/[^a-z0-9 ]/gi,'').replace(/[ ]+/g, '-'), 
+        Tiulo: data.nombreproyecto.replace(/[^a-z0-9 ]/gi, ''),
+        url: data.nombreproyecto.replace(/[^a-z0-9 ]/gi, '').replace(/[ ]+/g, '-'),
         //tags:data. , 
         //descripcion:datadescripcionproyecto. , 
         oferta: data.persupuestado,
@@ -45,10 +47,34 @@ exports.InsertarProyecto = function(req, res) {
             var receivers = require('../../app/sockets/receivers.server.sockets');
             receivers.receivers(io, "registrado");
 
-            res.json({
-                success: true
+            var nick = new ProyModel({
+                nombre: proyecto.Tiulo,
+                fecha: null,
+                descripcioncorta: proyecto.desarrollo.replace(regex, " ").replace(/\W+/g, " "),
+                estatus: 1,
+                categoriaid: proyecto._idbp_Categorias,
+                Subcatagoriaid: proyecto._idbp_Subcategorias,
+                Presupuestoid: proyecto._idPresupuesto,
+                urlproyecto: proyecto.url
             });
-            return 1;
+            nick.save(function(err) {
+                if (err) {
+                    res.json({
+                        success: false
+                    });
+                    throw err;
+
+                } else {
+
+                    console.log('Proyect saved successfully on Mongodb');
+                    res.json({
+                        success: true
+                    });
+                    return 1;
+
+                }
+
+            });
 
         } else {
 
@@ -57,6 +83,15 @@ exports.InsertarProyecto = function(req, res) {
             throw err;
         }
     });
+}
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 // Obtener Proyectos
@@ -78,17 +113,80 @@ exports.GetProjects = function(req, res) {
 
 }
 
-// Projecto especifico 
-exports.GetProject = function(req, callback, arg) {
-  //console.log("SELECT * from V_PROYECTOS nombre ="+arg)
-  console.log(arg);
-    Helper.Query(function(data) {
-        if (data != 'nodata') { 
-           callback(data);
+// Obtener Proyectos MongoDB
+exports.GetProjectsMongo = function(req, res) {
+    var ProyModel = mongoose.model('ProyModel', ProyModel);
+
+    var query = ProyModel.find({});
+
+    query.sort({
+        fecha: -1
+    }).limit(8).exec(function(err, docs) {
+        if (err) {
+            res.json({
+                success: false
+            });
+            res.status(400);
         } else {
-           callback(null);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(docs);
 
         }
-    }, "SELECT * from V_PROYECTOS where urlproyecto ='"+arg+"'", db);
+
+    });
+
+}
+
+
+// Obtener Proyectos MongoDB
+exports.SearchProjectsMongo = function(req, res) {
+
+
+
+    var ProyModel = mongoose.model('ProyModel', ProyModel);
+    var negacion = ' -la -los -el -de -en -las -que';
+
+    var query = ProyModel.find(
+          { $text : {$search :req.query.q + negacion}  } , 
+              {score : { $meta: "textScore" } }   
+             ).sort( { score: { $meta: "textScore" } } 
+
+        );
+
+    query.sort({
+        fecha: -1
+    }).limit(8).exec(function(err, docs) {
+        if (err) {
+            res.json({
+                success: false
+            });
+            res.status(400);
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.json(docs);
+
+        }
+
+    });
+
+}
+
+// Projecto especifico 
+exports.GetProject = function(req, callback, arg) {
+    //console.log("SELECT * from V_PROYECTOS nombre ="+arg)
+    console.log(arg);
+    Helper.Query(function(data) {
+        if (data != 'nodata') {
+            callback(data);
+        } else {
+            callback(null);
+
+        }
+    }, "SELECT * from V_PROYECTOS where urlproyecto ='" + arg + "'", db);
+
+}
+
+
+exports.UsuarioMongoDb = function(req, res) {
 
 }

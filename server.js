@@ -30,6 +30,9 @@ const corsOptions = {
 
 var users = {};
 
+
+
+
 app.use(cookieParser('dsasdas'));
 
 var server = require('http').Server(app);
@@ -106,6 +109,8 @@ var Modulo = require('./app/modules/chat.js')({
     app: app
 });
 
+
+app.get('/testweb', UsuariosCtrl.UsuarioMongoDb );
 
 
 var Modulo = require('./app/modules/pages.js')({

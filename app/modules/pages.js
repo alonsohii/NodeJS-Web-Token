@@ -15,6 +15,7 @@ module.exports = function(params,callback) {
 	this.app.post('/InsertarProyecto',this.ProyectCtrl.InsertarProyecto);
 
 
+
 	this.Helper.Pagina('/registro','registro',{ title: "Registro de Usuarios"} , app);
 	this.Helper.Pagina('/','home',{ title: "Registro de Usuarios"} , app);
 	this.Helper.Pagina('/login','login',{ title: "Registro de Usuarios"} , app);
@@ -28,6 +29,7 @@ module.exports = function(params,callback) {
 
 	this.Helper.Pagina('/createproject','project',{ title: "Creando Proyecto"},app);
 	this.Helper.Pagina('/search','search',{ title: "Buscar Proyecto"},app);
+	this.Helper.Pagina('/search2','searchapi',{ title: "Buscar Proyecto"},app);
 	this.Helper.Pagina('/usuarios','users',{ title: "Usuarios"},app);
 
 
@@ -43,8 +45,11 @@ module.exports = function(params,callback) {
 
 	this.app.get('/Categorias', this.PaisesCtrl.CategoriasProyecto );
 	this.app.get('/Projects', this.ProyectCtrl.GetProjects );
+	this.app.get('/ProjectsM', this.ProyectCtrl.GetProjectsMongo );
 	this.app.get('/SubCategorias', this.PaisesCtrl.SubCategoriasProyecto );
 	this.app.get('/Presupuestos', this.PaisesCtrl.Presupuestos );
+
+	this.app.get('/searchapi', this.ProyectCtrl.SearchProjectsMongo);
 
 	this.app.get('/project/:nombre', function(req, res) {
 
@@ -52,6 +57,7 @@ module.exports = function(params,callback) {
 
        this.ProyectCtrl.GetProject(null,function(data){
       // 	this.Helper.UrlReplace(req.params.nombre)
+      console.log(data);
 
 		    if(data != null){
 			    res.render('detalle', data[0]);

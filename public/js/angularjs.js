@@ -13,7 +13,7 @@ var app = angular.module('app', [])
         /*for(var i=0; i<25; i++){
           $scope.items.push('Product ' + i);
         } */
-        $http.get("http://localhost:8080/projects")
+        $http.get("http://localhost:8080/projectsm")
             .then(function(response) {
 
                 if (response.data != null) {

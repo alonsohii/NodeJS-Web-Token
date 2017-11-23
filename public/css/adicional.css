@@ -165,3 +165,10 @@ input[type=email]  {
       text-align: center;
       top: 40%;
     }
+
+ .webSearch{padding: 10px; background:#FFF;width:1000px;font-size:80%;border:1px #000 solid;-moz-border-radius:3px;-webkit-border-radius:3px}
+#content p{text-indent:20px;text-align:justify;}
+#pagingControls ul{display:inline;padding-left:0.5em}
+#pagingControls li{display:inline;padding:0 0.5em}
+
+
