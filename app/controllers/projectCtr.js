@@ -49,7 +49,6 @@ exports.InsertarProyecto = function(req, res) {
 
             var nick = new ProyModel({
                 nombre: proyecto.Tiulo,
-                fecha: null,
                 descripcioncorta: proyecto.desarrollo.replace(regex, " ").replace(/\W+/g, " "),
                 estatus: 1,
                 categoriaid: proyecto._idbp_Categorias,
