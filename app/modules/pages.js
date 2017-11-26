@@ -63,7 +63,7 @@ module.exports = function(params,callback) {
 			    res.render('detalle', data[0]);
 			    res.status(200);
 		    }else{
-		    	var data = { nombre:'(404) No existe un proyecto con este nombre'}
+		    	var data = { nombre:'(404) No existe un proyecto con este nombre' , desarrollo:"", categoria:"",subcategoria :""}
 		        res.render('detalle', data);
 		        res.status(200);
 		    }

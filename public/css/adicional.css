@@ -23,7 +23,7 @@
 	background-image: linear-gradient(220deg, rgba(255, 255, 255, 0.95) 0%, rgb(194, 233, 251) 110%);
 	box-shadow: 0 0 1px 1px #a1c3fe;
 	padding:10px 50px 50px 50px;
-	margin: 3.5em auto 0 auto;
+	margin: 2.5em auto 0 auto;
 	border-radius: 1px;
 	text-align: center;
 	width: 100%;
@@ -44,7 +44,7 @@
 	background-image: linear-gradient(220deg, rgba(255, 255, 255, 0.95) 0%, rgb(194, 233, 251) 110%);
 	box-shadow: 0 0 4px 1px #a1c3fe;
 	padding:10px 50px 50px 50px;
-	margin: 3.5em auto 0 auto;
+	margin: 2.5em auto 0 auto;
 	border-radius: 1px;
 	text-align: center;
 	width: 100%;
@@ -166,7 +166,13 @@ input[type=email]  {
       top: 40%;
     }
 
- .webSearch{padding: 10px; background:#FFF;width:1000px;font-size:80%;border:1px #000 solid;-moz-border-radius:3px;-webkit-border-radius:3px}
+ .webSearch{padding: 10px; background:#FFF;width:1000px;
+ 	font-size:80%;
+ 	border: 0px #ccc solid;
+ 	-moz-border-radius:3px;
+ 	-webkit-border-radius:3px;
+ 	ox-shadow: 0 0 4px 1px #a1c3fe;
+ }
 #content p{text-indent:20px;text-align:justify;}
 #pagingControls ul{display:inline;padding-left:0.5em}
 #pagingControls li{display:inline;padding:0 0.5em}

@@ -136,37 +136,65 @@ exports.GetProjectsMongo = function(req, res) {
 
 }
 
-
 // Obtener Proyectos MongoDB
 exports.SearchProjectsMongo = function(req, res) {
 
-
-
     var ProyModel = mongoose.model('ProyModel', ProyModel);
     var negacion = ' -la -los -el -de -en -las -que';
+    console.log(req.query.last);
+    if (req.query.last == null) {
 
-    var query = ProyModel.find(
-          { $text : {$search :req.query.q + negacion}  } , 
-              {score : { $meta: "textScore" } }   
-             ).sort( { score: { $meta: "textScore" } } 
+        var query = ProyModel.find({
+            $text: {
+                $search: req.query.q + negacion
+            }
+        }, {
+            score: {
+                $meta: "textScore"
+            }
+        }).sort({
+                score: {
+                    $meta: "textScore"
+                }
+            }
 
         );
 
-    query.sort({
-        fecha: -1
-    }).limit(8).exec(function(err, docs) {
-        if (err) {
-            res.json({
-                success: false
-            });
-            res.status(400);
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.json(docs);
+        query.sort({
+            fecha: -1
+        }).exec(function(err, docs) {
+            if (err) {
+                res.json({
+                    success: false
+                });
+                res.status(400);
+            } else {
+                res.setHeader('Content-Type', 'application/json');
+                res.json(docs);
 
-        }
+            }
 
-    });
+        });
+
+    } else {
+        var query = ProyModel.find();
+
+        query.sort({
+            fecha: -1
+        }).limit(100).exec(function(err, docs) {
+            if (err) {
+                res.json({
+                    success: false
+                });
+                res.status(400);
+            } else {
+                res.setHeader('Content-Type', 'application/json');
+                res.json(docs);
+
+            }
+
+        });
+    }
 
 }
 
@@ -184,7 +212,6 @@ exports.GetProject = function(req, callback, arg) {
     }, "SELECT * from V_PROYECTOS where urlproyecto ='" + arg + "'", db);
 
 }
-
 
 exports.UsuarioMongoDb = function(req, res) {
 
