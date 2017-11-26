@@ -35,30 +35,30 @@
         }
     </style>
     <script>
-    debugger;
+        debugger;
         var typingTimer; //timer identifier
         var doneTypingInterval = 400; //time in ms, 5 second for example
         var $input = $('#buscador');
 
         //on keyup, start the countdown
-        $(document).on('keyup','#buscador', function() {
+        $(document).on('keyup', '#buscador', function() {
             clearTimeout(typingTimer);
             typingTimer = setTimeout(doneTyping, doneTypingInterval);
         });
 
         //on keydown, clear the countdown 
-        $(document).on('keydown','#buscador', function() {
+        $(document).on('keydown', '#buscador', function() {
             clearTimeout(typingTimer);
         });
 
         //user is "finished typing," do something
         function doneTyping() {
-           $( "#formsearch" ).submit();
+            $("#formsearch").submit();
         }
 
-
         $(document).on('click', '#botonx', function() {
-            location.href = '/project/' +  $(this).parent().attr('url');
+            debugger;
+            location.href = '/project/' + $(this).parent().parent().children().attr('url');
         });
     </script>
 
@@ -73,21 +73,22 @@
                 $(document).ready(function() {
 
                     $.get('http://localhost:8080/searchapi?last=1' + $(this).children('#buscador').val(), function(data, status) {
-                        $('#content').html('');
+                        $('tbody').html('');
 
                         $.when(
                             $.each(data, function(index, element) {
-                                $('#content').append('<div class="z"><div class="subscribe"  url=' + element.urlproyecto + ' >  ' +
-                                    '<p> ' + element.nombre + ' </p>' +
-                                    '<div>  ' + element.descripcioncorta + '  </div><br>' +
-                                    '<button   id="botonx">Postularme</button>  </div></div>');
+                                $('#search').append('<tr class="z"  url=' + element.urlproyecto + ' > ' +
+                                    ' <td  id="url" url=' + element.urlproyecto + ' > <p> ' + element.nombre + ' </p>  <div>  ' + element.descripcioncorta + '  </div> </td>' +
+                                    ' <td>Propuestas</td><td>Fecha</td>' +
+                                    '<td>Precio  <br> <button   id="botonx">Postularme</button>  </td>' +
+                                    ' </tr>');
 
                             })
 
                         ).then(function(x) {
-                            pager.paragraphsPerPage = 6; // set amount elements per page
-                            pager.pagingContainer = $('#content'); // set of main container
-                            pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
+                            pager.paragraphsPerPage = 9;
+                            pager.pagingContainer = $('tbody');
+                            pager.paragraphs = $('tr', pager.pagingContainer);
                             pager.showPage(1);
 
                         });
@@ -96,29 +97,55 @@
                 });
 
                 $(document).on('submit', '#formsearch', function(data) {
-
+                   var num = 0;
                     $.get('http://localhost:8080/searchapi?q=' + $(this).children('#buscador').val(), function(data, status) {
-                        $('#content').html('');
+                        $('tbody').html('');
 
                         $.when(
                             $.each(data, function(index, element) {
-                                $('#content').append('<div class="z"><div class="subscribe"  url=' + element.urlproyecto + ' >  ' +
-                                    '<p> ' + element.nombre + ' </p>' +
-                                    '<div>  ' + element.descripcioncorta + '  </div><br>' +
-                                    '<button   id="botonx">Postularme</button>  </div></div>');
+                                $('#search').append('<tr class="z"  > ' +
+                                    ' <td  id="url" url=' + element.urlproyecto + ' > <p> ' + element.nombre + ' </p>  <div>  ' + element.descripcioncorta + '  </div> </td>' +
+                                    ' <td>Propuestas</td><td>Fecha</td>' +
+                                    '<td>Precio  <br> <button    id="botonx">Postularme</button>  </td>' +
+                                    ' </tr>');
 
                             })
 
                         ).then(function(x) {
-                            pager.paragraphsPerPage = 6; // set amount elements per page
-                            pager.pagingContainer = $('#content'); // set of main container
-                            pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
+                            pager.paragraphsPerPage = 9;
+                            pager.pagingContainer = $('tbody');
+                            pager.paragraphs = $('tr', pager.pagingContainer);
                             pager.showPage(1);
 
                         });
                     });
                     return false;
                 });
+
+                $(document).on('click', 'th', function() {
+                    var table = $(this).parents('table').eq(0);
+                    var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+                    this.asc = !this.asc;
+                    if (!this.asc) {
+                        rows = rows.reverse();
+                    }
+                    table.children('tbody').empty().html(rows);
+                });
+
+                function comparer(index) {
+                    return function(a, b) {
+                        var valA = getCellValue(a, index),
+                            valB = getCellValue(b, index);
+                        return $.isNumeric(valA) && $.isNumeric(valB) ?
+                            valA - valB : valA.localeCompare(valB);
+                    };
+                }
+
+                function getCellValue(row, index) {
+                    return $(row).children('td').eq(index).text();
+                }
+
+
             </script>
 
             <div id="buscador">
@@ -130,18 +157,35 @@
             </div>
             <div class="webSearch">
                 <h3><a href="">Proyectos encontrados</a></h3>
-                <div id="content">
 
-                </div>
+                <table id="search">
+                    <thead>
+                        <tr>
+                            <th>Proyecto</th>
+                            <th>Propuestas</th>
+                            <th>Fecha</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>b</td>
+                            <td>352</td>
+                            <td>352</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div id="pagingControls"></div>
             </div>
             <script type="text/javascript">
-                $(document).ready(function() {
-                    pager.paragraphsPerPage = 6; // set amount elements per page
-                    pager.pagingContainer = $('#content'); // set of main container
-                    pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
-                    pager.showPage(1);
-                });
+                /*  $(document).ready(function() {
+                                    pager.paragraphsPerPage = 6; // set amount elements per page
+                                    pager.pagingContainer = $('#search'); // set of main container
+                                    pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
+                                    pager.showPage(1);
+                                });*/
             </script>
 
         </div>

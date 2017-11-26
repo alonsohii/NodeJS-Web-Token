@@ -208,7 +208,8 @@ Imtech.Pager = function() {
     this.paragraphsPerPage = 3;
     this.currentPage = 1;
     this.pagingControlsContainer = '#pagingControls';
-    this.pagingContainerPath = '#content';
+    this.pagingContainerPath = 'tbody';
+    debugger;
     this.numPages = function() {
         var numPages = 0;
         if (this.paragraphs != null && this.paragraphsPerPage != null) {
@@ -221,7 +222,7 @@ Imtech.Pager = function() {
         var html = '';
         this.paragraphs.slice((page-1) * this.paragraphsPerPage,
             ((page-1)*this.paragraphsPerPage) + this.paragraphsPerPage).each(function() {
-            html += '<div>' + $(this).html() + '</div>';
+            html +=  '<tr>'+ $(this).html()+'</tr>' ;
         });
         $(this.pagingContainerPath).html(html);
         renderControls(this.pagingControlsContainer, this.currentPage, this.numPages());
