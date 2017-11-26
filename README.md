@@ -1,4 +1,4 @@
-# Node Token 
+# Node JS Token (Simple Search Engine and Chat Like Messenger)
 
 This repo uses JSON Web Tokens and the [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) package to implement token based authentication on a simple Node.js API.
 
@@ -13,7 +13,7 @@ This is a starting point to demonstrate the method of authentication by verifyin
 1. Install dependencies: `npm install`
 2. Change SECRET in `config.js`
 3. Add your own MongoDB database to `config.js`
-4. Start the server: `node server.js`
+4. Start the server: `node server.js or npm start`
 
 
 Once everything is set up, we can begin to use our app by creating and verifying tokens.
