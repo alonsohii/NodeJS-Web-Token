@@ -54,7 +54,8 @@ exports.InsertarProyecto = function(req, res) {
                 categoriaid: proyecto._idbp_Categorias,
                 Subcatagoriaid: proyecto._idbp_Subcategorias,
                 Presupuestoid: proyecto._idPresupuesto,
-                urlproyecto: proyecto.url
+                urlproyecto: proyecto.url,
+                idproyecto:ress.insertId
             });
             nick.save(function(err) {
                 if (err) {

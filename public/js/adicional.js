@@ -32,12 +32,10 @@ function validarCampos2(ids) {
         nvAct = $(this).attr('nv');
         numChar = $(this).attr('nr');
 
-        
-
         if (campoAct.indexOf('input') != -1 || campoAct.indexOf('password') != -1) {
-            if(numChar!=null){
-               val += validarNC(valAct, nvAct,numChar);
-               valido = validarNC(valAct, nvAct,numChar);
+            if (numChar != null) {
+                val += validarNC(valAct, nvAct, numChar);
+                valido = validarNC(valAct, nvAct, numChar);
             }
         }
 
@@ -90,16 +88,16 @@ function validar(str, campo) {
 
 }
 
-function validarNC(str, campo,nc) {
+function validarNC(str, campo, nc) {
     //debugger;
-    nc =  (nc== null?40:parseInt(nc));
+    nc = (nc == null ? 40 : parseInt(nc));
 
     if (str != null && str != '') {
         if (str.length < nc && str.length > 1) {
             return 'isvalid';
 
         } else {
-            return 'El campo "' + campo + '" debe ser menor a '+nc+' caracteres o mayor a 1.<br>';
+            return 'El campo "' + campo + '" debe ser menor a ' + nc + ' caracteres o mayor a 1.<br>';
         }
     } else {
         return 'El campo "' + campo + '" no debe estar vacio.<br>';
@@ -200,9 +198,6 @@ window.onbeforeunload = function(e) {
     // return 'Calling some alert messages here'; //return not alert
 }
 
-
-
-
 var Imtech = {};
 Imtech.Pager = function() {
     this.paragraphsPerPage = 3;
@@ -220,9 +215,8 @@ Imtech.Pager = function() {
     this.showPage = function(page) {
         this.currentPage = page;
         var html = '';
-        this.paragraphs.slice((page-1) * this.paragraphsPerPage,
-            ((page-1)*this.paragraphsPerPage) + this.paragraphsPerPage).each(function() {
-            html +=  '<tr>'+ $(this).html()+'</tr>' ;
+        this.paragraphs.slice((page - 1) * this.paragraphsPerPage, ((page - 1) * this.paragraphsPerPage) + this.paragraphsPerPage).each(function() {
+            html += '<tr>' + $(this).html() + '</tr>';
         });
         $(this.pagingContainerPath).html(html);
         renderControls(this.pagingControlsContainer, this.currentPage, this.numPages());

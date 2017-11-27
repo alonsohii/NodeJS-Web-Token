@@ -14,7 +14,8 @@ module.exports = mongoose.model('ProyModel', new Schema({
     Subcatagoria:String,
     Presupuestoid:Number,
     Presupuesto:String,
-    urlproyecto:String
+    urlproyecto:String,
+    idproyecto:Number
 }));
 
 

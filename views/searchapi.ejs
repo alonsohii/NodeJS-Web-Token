@@ -11,6 +11,7 @@
     <script type="text/javascript" src=" https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
 
     <script type="text/javascript" src=" ../js/adicional.js"></script>
+    <script type="text/javascript" src=" ../js/searchapi.js"></script>
 
     <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js'></script>
 
@@ -34,33 +35,6 @@
   overflow-x: hidden;*/
         }
     </style>
-    <script>
-        debugger;
-        var typingTimer; //timer identifier
-        var doneTypingInterval = 400; //time in ms, 5 second for example
-        var $input = $('#buscador');
-
-        //on keyup, start the countdown
-        $(document).on('keyup', '#buscador', function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
-        });
-
-        //on keydown, clear the countdown 
-        $(document).on('keydown', '#buscador', function() {
-            clearTimeout(typingTimer);
-        });
-
-        //user is "finished typing," do something
-        function doneTyping() {
-            $("#formsearch").submit();
-        }
-
-        $(document).on('click', '#botonx', function() {
-            debugger;
-            location.href = '/project/' + $(this).parent().parent().children().attr('url');
-        });
-    </script>
 
 </head>
 
@@ -69,56 +43,49 @@
         <div class="container ">
 
             <script type="text/javascript">
+                var typingTimer; //timer identifier
+                var doneTypingInterval = 400; //time in ms, 5 second for example
+                var $input = $('#buscador');
+
+                //on keyup, start the countdown
+                $(document).on('keyup', '#buscador', function() {
+                    clearTimeout(typingTimer);
+                    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+                });
+
+                //on keydown, clear the countdown 
+                $(document).on('keydown', '#buscador', function() {
+                    clearTimeout(typingTimer);
+                });
+
+                //user is "finished typing," do something
+                function doneTyping() {
+                    $("#formsearch").submit();
+                }
+
+                $(document).on('click', '#botonx', function() {
+                    debugger;
+                    location.href = '/project/' + $(this).parent().parent().children().attr('url');
+                });
                 var pager = new Imtech.Pager();
                 $(document).ready(function() {
 
-                    $.get('http://localhost:8080/searchapi?last=1' + $(this).children('#buscador').val(), function(data, status) {
-                        $('tbody').html('');
-
-                        $.when(
-                            $.each(data, function(index, element) {
-                                $('#search').append('<tr class="z"  url=' + element.urlproyecto + ' > ' +
-                                    ' <td  id="url" url=' + element.urlproyecto + ' > <p> ' + element.nombre + ' </p>  <div>  ' + element.descripcioncorta + '  </div> </td>' +
-                                    ' <td>Propuestas</td><td>Fecha</td>' +
-                                    '<td>Precio  <br> <button   id="botonx">Postularme</button>  </td>' +
-                                    ' </tr>');
-
-                            })
-
-                        ).then(function(x) {
-                            pager.paragraphsPerPage = 9;
-                            pager.pagingContainer = $('tbody');
-                            pager.paragraphs = $('tr', pager.pagingContainer);
-                            pager.showPage(1);
-
-                        });
+                    Busqueda({
+                        busqueda: 'last=1',
+                        inicio: 1
                     });
 
                 });
 
                 $(document).on('submit', '#formsearch', function(data) {
-                   var num = 0;
-                    $.get('http://localhost:8080/searchapi?q=' + $(this).children('#buscador').val(), function(data, status) {
-                        $('tbody').html('');
+                    var num = 0;
+                    var buscar = $(this).children('#buscador').val();
 
-                        $.when(
-                            $.each(data, function(index, element) {
-                                $('#search').append('<tr class="z"  > ' +
-                                    ' <td  id="url" url=' + element.urlproyecto + ' > <p> ' + element.nombre + ' </p>  <div>  ' + element.descripcioncorta + '  </div> </td>' +
-                                    ' <td>Propuestas</td><td>Fecha</td>' +
-                                    '<td>Precio  <br> <button    id="botonx">Postularme</button>  </td>' +
-                                    ' </tr>');
-
-                            })
-
-                        ).then(function(x) {
-                            pager.paragraphsPerPage = 9;
-                            pager.pagingContainer = $('tbody');
-                            pager.paragraphs = $('tr', pager.pagingContainer);
-                            pager.showPage(1);
-
-                        });
+                    Busqueda({
+                        busqueda: buscar,
+                        inicio: 0
                     });
+
                     return false;
                 });
 
@@ -144,8 +111,6 @@
                 function getCellValue(row, index) {
                     return $(row).children('td').eq(index).text();
                 }
-
-
             </script>
 
             <div id="buscador">
@@ -156,7 +121,8 @@
 
             </div>
             <div class="webSearch">
-                <h3><a href="">Proyectos encontrados</a></h3>
+                <h4><a href="">Proyectos encontrados</a></h4>
+                <div id="mensajes"></div>
 
                 <table id="search">
                     <thead>
@@ -168,25 +134,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>b</td>
-                            <td>352</td>
-                            <td>352</td>
-                        </tr>
+
                     </tbody>
                 </table>
 
                 <div id="pagingControls"></div>
             </div>
-            <script type="text/javascript">
-                /*  $(document).ready(function() {
-                                    pager.paragraphsPerPage = 6; // set amount elements per page
-                                    pager.pagingContainer = $('#search'); // set of main container
-                                    pager.paragraphs = $('div.z', pager.pagingContainer); // set of required containers
-                                    pager.showPage(1);
-                                });*/
-            </script>
 
         </div>
 </body>

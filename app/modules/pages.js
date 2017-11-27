@@ -57,7 +57,7 @@ module.exports = function(params,callback) {
 
        this.ProyectCtrl.GetProject(null,function(data){
       // 	this.Helper.UrlReplace(req.params.nombre)
-      console.log(data);
+     // console.log(data);
 
 		    if(data != null){
 			    res.render('detalle', data[0]);
