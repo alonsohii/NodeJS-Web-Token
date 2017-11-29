@@ -36,9 +36,10 @@
     </style>
 
     <script>
+        var loge = 0;
         $(document).ready(function() {
-           var desarrollo = <%- JSON.stringify(desarrollo) %>;
-           $('.subscribeStatic').html(desarrollo);
+            var desarrollo = <%- JSON.stringify(desarrollo) %>;
+            $('.subscribeStatic').html(desarrollo);
 
             $("#Notificacion").hide();
             $("#Correcto").hide();
@@ -67,6 +68,21 @@
 
             });
 
+            $.get("http://localhost:8080/api/?token=" + localStorage.getItem('tk'), function(data, status) {
+
+                if (data.success) {
+                    loge = 1;
+                    $('#botones').hide();
+                    $("#acceso").hide();
+                    $("#registrot").hide();
+                } else {
+                    loge = 0;
+                    $('#botones').show();
+                    $("#registrot").show();
+                }
+
+            });
+
         });
     </script>
 
@@ -75,110 +91,145 @@
 <body>
     <%- include('header'); %>
 
-
-
-
-    <div class="blog-">
-      <div class="container">
-        <h1 class="blog-title"> <%= nombre %> </h1>
-        <p class="lead blog-description"> <%= categoria %> / <%= subcategoria %></p>
-      </div>
-    </div>
-
-    <div class="container">
-
-
-
-      <div class="row">
-
-        <div class="col-sm-8">
-
-    <div class="subscribeStatic">
-     <%= desarrollo %>
-
-    </div > <div id="" class="gradientWhite pa5" ><button class="blueButton" id="postulado" >Postularme para este proyecto</button></div> 
-
-
-          <div class="">
-            <h2 class="blog-post-title">Postulados</h2>
-       
-                   <div class="s">
-
-                <div id="mensajes"></div>
-
-                <table id="search">
-                    <thead>
-                        <tr>
-                            <th>Usuario:</th>
-                            <th>Experiencia</th>
-                            <th>Fecha</th>
-                            <th>Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-
-                <div id="pagingControls"></div>
+        <div class="blog-">
+            <div class="container">
+                <h1 class="blog-title"> <%= nombre %> </h1>
+                <p class="lead blog-description">
+                    <%= categoria %> /
+                        <%= subcategoria %>
+                </p>
             </div>
+        </div>
 
-        
-          </div><!-- /.blog-post -->
+        <div class="container">
 
+            <div class="row">
 
-          <nav class="blog-pagination">
-        
-          
-          </nav>
+                <div class="col-sm-8">
 
-        </div><!-- /.blog-main -->
+                    <div class="subscribeStatic">
+                        <%= desarrollo %>
 
-        <div class="col-sm-3 offset-sm-1 blog-sidebar gradientWhite">
-          <div class="">
-            <h4>Proyectos relacionados</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-          </div>
-          <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-               <li><a href="#">March 2014</a></li>
-                <li><a href="#">March 2014</a></li>
-                 <li><a href="#">March 2014</a></li>
-                  <li><a href="#">March 2014</a></li>
-                   <li><a href="#">March 2014</a></li>
-                    <li><a href="#">March 2014</a></li>
-                     <li><a href="#">March 2014</a></li>
-                      <li><a href="#">March 2014</a></li>
-                       <li><a href="#">March 2014</a></li>
-            
-            </ol>
-          </div>
-          <div class="sidebar-module">
-            <h4>Recomienda este proyecto a un amigo:</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
+                    </div>
 
-            </ol>
-          </div>
-        </div><!-- /.blog-sidebar -->
+                    <div class=" containerBorderLite pa10">
 
-      </div><!-- /.row -->
+                        <div class="row">
+                            <div class="gradientBlack borderRadius pa10 textWhite transparente">Detalles de postulacion</div>
+                            <div class="col-xs-12" id="demoContainer">
+                                <br>
+                                <div class="alert alert-success" id="Correcto">
+                                    <strong>Bien!</strong> Registro Hecho exitosamente.
+                                </div>
+                                <div class="alert alert-danger" id="Notificacion">
+                                    <p id="textnot"></p>
+                                </div>
+                                <div id="registrationForm2" class="form-horizontal fv-form fv-form-bootstrap" novalidate="novalidate" target="none" action="">
+                                    <!--  <button type="submit" class="fv-hidden-submit" style="display: none; width: 0px; height: 0px;"></button> -->
 
-    </div><!-- /.container -->
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Usuario</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" class="form-control" name="email" id="email" />
+                                        </div>
+                                    </div>
 
-    <footer class="blog-footer">
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Password</label>
+                                        <div class="col-xs-5">
+                                            <input type="password" class="form-control" name="pw" id="pw" />
+                                        </div>
+                                    </div>
 
-       
-    </footer>
+                                    <div class="form-group">
+                                        <div class="col-xs-9 col-xs-offset-3">
+                                            <button class="btn btn-primary" name="signup" value="Sign up" id='login'>Acceso</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
 
+                    <div id="" class="gradientWhite pa5">
+                        <button class="blueButton" id="postulado">Postularme para este proyecto</button>
+                    </div>
 
+                    <div class="">
+                        <h2 class="blog-post-title">Postulados</h2>
 
+                        <div class="s">
 
+                            <div id="mensajes"></div>
 
+                            <table id="search">
+                                <thead>
+                                    <tr>
+                                        <th>Usuario:</th>
+                                        <th>Experiencia</th>
+                                        <th>Fecha</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
+                                </tbody>
+                            </table>
+
+                            <div id="pagingControls"></div>
+                        </div>
+
+                    </div>
+                    <!-- /.blog-post -->
+
+                    <nav class="blog-pagination">
+
+                    </nav>
+
+                </div>
+                <!-- /.blog-main -->
+
+                <div class="col-sm-3 offset-sm-1 blog-sidebar containerBorderLite">
+                    <div class="">
+                        <h4>Proyectos relacionados</h4>
+                        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>Archives</h4>
+                        <ol class="list-unstyled">
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+                            <li><a href="#">March 2014</a></li>
+
+                        </ol>
+                    </div>
+                    <div class="sidebar-module">
+                        <h4>Recomienda este proyecto a un amigo:</h4>
+                        <ol class="list-unstyled">
+                            <li><a href="#">GitHub</a></li>
+
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.blog-sidebar -->
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+        <footer class="blog-footer">
+
+        </footer>
 
 </body>
 
