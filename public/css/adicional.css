@@ -7,6 +7,45 @@
     vertical-align: middle;
 }
 
+.containderCustom{
+    padding-top:10px; 
+    margin-top: 0px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto
+}
+
+.gradientWhite4{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f3f3f3+50,ededed+51,ffffff+100;White+Gloss+%232 */
+background: rgb(255,255,255); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(243,243,243,1) 50%, rgba(237,237,237,1) 51%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+}
+nav{
+    margin: 0px;
+}
+
+@media (min-width:768px) {
+    .containderCustom {
+        width: 750px
+    }
+}
+
+@media (min-width:992px) {
+    .containderCustom {
+        width: 970px
+    }
+}
+
+@media (min-width:1200px) {
+    .containderCustom {
+        width: 1170px
+    }
+}
+
 .borderRadius {
     border-radius: 10px;
     box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
@@ -34,9 +73,43 @@
     text-shadow: 0 1px 0 #000;
 }
 
+
+
+.gradientBlackshort {
+    background: url(https://jackrugile.com/images/misc/noise-diagonal.png), linear-gradient(#777, #444);
+    border-left: 1px solid #555;
+    border-right: 1px solid #777;
+    border-top: 1px solid #555;
+    border-bottom: 1px solid #333;
+    box-shadow: inset 0 1px 0 #999;
+    color: #fff;
+    font-weight: none;
+    padding: 7px 5px;
+    position: relative;
+    font-size: 13px;
+ height:  30px;
+    text-shadow: 0 1px 0 #000;
+}
+
+.gradientWhite3{
+background: rgba(226,226,226,1);
+background: -moz-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226,226,226,1)), color-stop(50%, rgba(219,219,219,1)), color-stop(51%, rgba(209,209,209,1)), color-stop(100%, rgba(254,254,254,1)));
+background: -webkit-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: -o-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: -ms-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+background: linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0 );
+}
+
 .textWhite {
     color: white;
     text-shadow: black 0.1em 0.1em 0.1em
+}
+
+.textBlack {
+    color: black;
+    text-shadow: black 0.1em 
 }
 
 .containerBorderLite {
@@ -183,7 +256,7 @@ button:active {
     border-width: 1px;
 }
 
-.subscribeStatic {
+.subscribeStaticBlue {
     background-image: linear-gradient(220deg, rgba(255, 255, 255, 0.95) 0%, rgb(194, 233, 251) 110%);
     box-shadow: 0 0 4px 1px #a1c3fe;
     padding: 10px 50px 50px 50px;

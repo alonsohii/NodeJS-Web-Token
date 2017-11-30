@@ -39,7 +39,7 @@
         var loge = 0;
         $(document).ready(function() {
             var desarrollo = <%- JSON.stringify(desarrollo) %>;
-            $('.subscribeStatic').html(desarrollo);
+            $('#detalleproyecto').html(desarrollo);
 
             $("#Notificacion").hide();
             $("#Correcto").hide();
@@ -90,11 +90,10 @@
 
 <body>
     <%- include('header'); %>
-
-        <div class="blog-">
-            <div class="container">
+        <div class="gradientWhite4">
+            <div class="containderCustom  ">
                 <h1 class="blog-title"> <%= nombre %> </h1>
-                <p class="lead blog-description">
+                <p class=" lead blog-description">
                     <%= categoria %> /
                         <%= subcategoria %>
                 </p>
@@ -106,8 +105,8 @@
             <div class="row">
 
                 <div class="col-sm-8">
-
-                    <div class="subscribeStatic">
+                   <!--  <div class="gradientWhite3 borderRadius  pa10 textBlack transparente">Detalles de postulacion</div>  -->
+                    <div  id="detalleproyecto" class="subscribeStaticBlue pa1">
                         <%= desarrollo %>
 
                     </div>
@@ -193,28 +192,21 @@
                 <div class="col-sm-3 offset-sm-1 blog-sidebar containerBorderLite">
                     <div class="">
                         <h4>Proyectos relacionados</h4>
-                        <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+                        <p>Etiam porta <em>Demo</em> Demo.</p>
                     </div>
                     <div class="sidebar-module">
-                        <h4>Archives</h4>
+                        <h4>Demo</h4>
                         <ol class="list-unstyled">
                             <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
-                            <li><a href="#">March 2014</a></li>
+                   
+                          
 
                         </ol>
                     </div>
                     <div class="sidebar-module">
                         <h4>Recomienda este proyecto a un amigo:</h4>
                         <ol class="list-unstyled">
-                            <li><a href="#">GitHub</a></li>
+                            <li><a href="#">Proyecto </a></li>
 
                         </ol>
                     </div>
