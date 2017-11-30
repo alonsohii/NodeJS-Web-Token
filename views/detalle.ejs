@@ -43,11 +43,9 @@
             // postulabox
         });
 
-        $( "#postulado" ).click(function() {
-            alert( "Handler for .click() called." );
-        });
+
         $(document).ready(function() {
-            var desarrollo = <%- JSON.stringify(desarrollo) %>;
+            var desarrollo = <% JSON.stringify(desarrollo) %>;
             $('#detalleproyecto').html(desarrollo);
 
             $("#Notificacion").hide();
@@ -114,8 +112,8 @@
             <div class="row">
 
                 <div class="col-sm-8">
-                    <!--  <div class="gradientWhite3 borderRadius  pa10 textBlack transparente">Detalles de postulacion</div>  -->
-                    <div id="detalleproyecto" class="subscribeStaticBlue pa1">
+                   <!--  <div class="gradientWhite3 borderRadius  pa10 textBlack transparente">Detalles de postulacion</div>  -->
+                    <div  id="detalleproyecto" class="subscribeStaticBlue pa1">
                         <%= desarrollo %>
 
                     </div>
@@ -123,7 +121,7 @@
                     <div id="postulabox" class=" containerBorderLite pa10">
 
                         <div class="row">
-                            <div class="gradientBlack borderRadius pa10 textWhite transparente">Postulate para este proyecto</div>
+                            <div class="gradientBlack borderRadius pa10 textWhite transparente">Detalles de postulacion</div>
                             <div class="col-xs-12" id="demoContainer">
                                 <br>
                                 <div class="alert alert-success" id="Correcto">
@@ -135,23 +133,25 @@
                                 <div id="registrationForm2" class="form-horizontal fv-form fv-form-bootstrap" novalidate="novalidate" target="none" action="">
                                     <!--  <button type="submit" class="fv-hidden-submit" style="display: none; width: 0px; height: 0px;"></button> -->
 
-                                    <form class="form-inline">
-                                        <div class="form-group">
-                                            <label class="col-xs-2 control-label ml10">Oferta:</label>
-                                            <div class="col-xs-5">
-                                                <input type="text" class="form-control" name="email" id="email" />
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Usuario</label>
+                                        <div class="col-xs-5">
+                                            <input type="text" class="form-control" name="email" id="email" />
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            <label class="col-xs-2 control-label ml10"> Correo:</label>
-                                            <div class="col-xs-5">
-                                                <input type="text" class="form-control" name="pw" id="pw" />
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-3 control-label">Password</label>
+                                        <div class="col-xs-5">
+                                            <input type="password" class="form-control" name="pw" id="pw" />
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Postularme</button>
-                                    </form>
+                                    </div>
 
+                                    <div class="form-group">
+                                        <div class="col-xs-9 col-xs-offset-3">
+                                            <button class="btn btn-primary" name="signup" value="Sign up" id='login'>Acceso</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -205,6 +205,8 @@
                         <h4>Demo</h4>
                         <ol class="list-unstyled">
                             <li><a href="#">March 2014</a></li>
+                   
+                          
 
                         </ol>
                     </div>

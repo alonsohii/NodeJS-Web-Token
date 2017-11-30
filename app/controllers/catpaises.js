@@ -66,6 +66,8 @@ exports.Presupuestos = function(req, res) {
 // Categoria de paises
 exports.CatalogoPaises = function(req, res) {
 
+
+    
     db.query('select * from v_paisesestados order by Nombre , nombreEstado', function(err, rows, fields) {
 
         res.setHeader('Content-Type', 'application/json');
@@ -75,10 +77,14 @@ exports.CatalogoPaises = function(req, res) {
         //res.header("Access-Control-Allow-Origin", "*");
         if (!err)
             console.log('The solution is: ');
-        else
-
+        else{
             console.log('Error while performing Query.' + err);
+
+        }
+
+        
     });
+    
 }
 
 exports.Visitante = function(req, res) {
