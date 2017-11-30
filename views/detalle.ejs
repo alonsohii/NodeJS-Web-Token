@@ -36,7 +36,16 @@
     </style>
 
     <script>
+
         var loge = 0;
+        $(document).on('click','#postulado',function(){
+            alert(1);
+            // postulabox
+        });
+
+        $( "#postulado" ).click(function() {
+            alert( "Handler for .click() called." );
+        });
         $(document).ready(function() {
             var desarrollo = <%- JSON.stringify(desarrollo) %>;
             $('#detalleproyecto').html(desarrollo);
@@ -111,7 +120,7 @@
 
                     </div>
 
-                    <div class=" containerBorderLite pa10">
+                    <div id="postulabox" class=" containerBorderLite pa10">
 
                         <div class="row">
                             <div class="gradientBlack borderRadius pa10 textWhite transparente">Postulate para este proyecto</div>
