@@ -40,6 +40,14 @@
             $("#Notificacion").hide();
             $("#Correcto").hide();
 
+
+            window.addEventListener('click', function(e){
+                if (document.getElementsByClassName('editor')[0].contains(e.target)){
+                    $('.editor').height(270);
+                } else{
+                    $('.editor').height(300);
+                }
+            })
             $("#registro").click(function() {
                 // ComboCategorias   ComboSubCategorias nombreproyecto descripcionproyecto ComboPresupuesto persupuestado
                 // #ComboCategorias,#ComboSubCategorias,#nombreproyecto,#descripcionproyecto,#ComboPresupuesto,#persupuestado

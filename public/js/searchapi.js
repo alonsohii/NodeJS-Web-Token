@@ -2,7 +2,6 @@
 function Busqueda(arg) {
 
      var comodin  = (arg.inicio == 1? '' :'q=' ) ;
-     debugger;
     $.get('http://localhost:8080/searchapi?'+comodin + arg.busqueda, function(data, status) {
         $('tbody').html('');
         $('#mensajes').html('');
@@ -12,7 +11,8 @@ function Busqueda(arg) {
             $.when(
                 $.each(data, function(index, element) {
                     $('#search').append('<tr class="z"  > ' +
-                        ' <td  id="url" url=' + element.urlproyecto + ' > <p> ' + element.nombre + ' </p>  <div>  ' + element.descripcioncorta + '  </div> </td>' +
+                        '<td  id="url" url=' + element.urlproyecto + ' ><span id="" class="iconProject"></span><p class="txtProject">'  + element.nombre + '</p> '+
+                        '<div> '+element.descripcioncorta + '  </div> </td>' +
                         ' <td>Propuestas</td><td>Fecha</td>' +
                         '<td>Precio  <br> <button    id="botonx">Postularme</button>  </td>' +
                         ' </tr>');
@@ -20,10 +20,12 @@ function Busqueda(arg) {
                 })
 
             ).then(function(x) {
-                pager.paragraphsPerPage = 9;
+                debugger;
+                pager.paragraphsPerPage = 10;
                 pager.pagingContainer = $('tbody');
                 pager.paragraphs = $('tr', pager.pagingContainer);
                 pager.showPage(1);
+                $('#referencePrj').addClass('iconProject');
 
             });
 

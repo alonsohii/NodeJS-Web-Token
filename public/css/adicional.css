@@ -642,4 +642,23 @@ input[type=email]  {
     margin-left: 10px;
 }
 
+.editor{
+    overflow-y: scroll; height: 320px; margin-top: 0px;
+}
+/* Icono de projecto GRID */
+.iconProject {
+background-image: url('../img/icon/project.png');
+height: 50px;
+width: 50px;
+text:#039022;
+float: left;
+background-repeat: no-repeat;
+opacity:0.6;
+filter:alpha(opacity=60); /* IE < 9.0 */
+}
+/* Texto de projecto GRID */
+.txtProject{
+    font-weight: bold;
+    left:10px;
+}
 /* Paginacion https://webgradients.com/ */
