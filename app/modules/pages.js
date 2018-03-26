@@ -34,6 +34,7 @@ module.exports = function(params,callback) {
 
 
 	// Paginas Mongo
+	
 
 	this.app.get('/setup', this.UsuariosCtrl.UsuarioMongoDb);
 	this.app.get('/paises', this.PaisesCtrl.CatalogoPaises );

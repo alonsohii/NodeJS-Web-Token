@@ -36,6 +36,8 @@ module.exports = function(params, callback) {
         });
     });
 
+    apiRoutes.get('/logout',params.AutCtrl.blackListToken);
+
     apiRoutes.get('/check', function(req, res) {
         res.json(req.decoded);
     });

@@ -33,13 +33,13 @@ var users = {};
 
 
 
-app.use(cookieParser('dsasdas'));
+//app.use(cookieParser('dsasdas'));
 
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 global.globalIo = io;
-app.locals.idactual = null;
+//app.locals.idactual = null;
 
 mongoose.connect('mongodb://localhost/test', {
     useMongoClient: true

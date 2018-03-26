@@ -7,6 +7,7 @@ var db = require('../connection');
 var app = express();
 app.set('superSecret', config.secret); // secret variable
 var crypto = require('crypto');
+var TokenModel = require('../models/token'); // get our mongoose model
 
 exports.autentificar = function(req, res) {
 
@@ -105,6 +106,37 @@ exports.autentificarMysql = function(req, res) {
         else
             console.log('Error while performing Query.' + err);
     });
+
+}
+
+exports.blackListToken = function(req,res)
+{
+    try
+    {
+        var token = new TokenModel({
+            token:token,
+            estatus:false
+        });
+        token.save(function(err) {
+            if (err) {
+                res.json({
+                    success: false
+                });
+                throw err;
+    
+            } else {
+                res.json({
+                    success: true
+                });
+            }
+    
+        });
+
+    }
+    catch(err){
+        throw err;
+    }
+
 
 }
 
