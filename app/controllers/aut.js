@@ -113,9 +113,10 @@ exports.blackListToken = function(req,res)
 {
     try
     {
+        // db.bios.find( { _id: 5 } )
         var token = new TokenModel({
-            token:token,
-            estatus:false
+            token:req.query.token,
+            estatus:true
         });
         token.save(function(err) {
             if (err) {
