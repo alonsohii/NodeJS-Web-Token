@@ -9,6 +9,7 @@ app.set('superSecret', config.secret); // secret variable
 var crypto = require('crypto');
 var TokenModel = require('../models/token'); // get our mongoose model
 
+
 exports.autentificar = function(req, res) {
 
     User.findOne({
@@ -118,20 +119,46 @@ exports.blackListToken = function(req,res)
             token:req.query.token,
             estatus:true
         });
-        token.save(function(err) {
+        var TokenModels = mongoose.model('TokenModel');
+        var tokenStr = req.query.token;
+
+        var query =  TokenModels.find( { "token": tokenStr });
+
+        query.exec(function(err, docs) {
             if (err) {
                 res.json({
                     success: false
                 });
                 throw err;
-    
             } else {
-                res.json({
-                    success: true
-                });
+                if(docs.length==0){
+
+                    token.save(function(err) {
+                        if (err) {
+                            res.json({
+                                success: false
+                            });
+                            throw err;
+                
+                        } else {
+                            res.json({
+                                success: true
+                            });
+                        }
+                
+                    });
+
+                }else{
+                    res.json({
+                        success: false
+                    });
+                }
+
             }
     
         });
+        
+
 
     }
     catch(err){

@@ -10,12 +10,34 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
 	if(!err) {
-	    console.log("Database is connected ... nn"  );    
+	    console.log("Database Mysql is connected ... "  );    
 	} else {
 		 if (err) throw err;
-	    console.log("Error connecting database ... nn"+ err);    
+	    console.log("Error connecting database Mysql... "+ err);    
 	}
 });
+
+
+
+function handleDisconnect(connection){
+	connection.on('error', function(err){
+	  if(!err.fatal)
+	  {
+		return;
+	  }
+	  if(err.code !== 'PROTOCOL_CONNECTION_LOST')
+	  {
+		throw err;
+	  }
+	  console.log('\nRe-connecting lost connection: ' +err.stack);
+  
+	  connection = mysql.createConnection(connection.config);
+	  handleDisconnect(connection);
+	  connection.connect();
+	});
+  }
+  
+  handleDisconnect(connection);
 
 
 module.exports = connection;
